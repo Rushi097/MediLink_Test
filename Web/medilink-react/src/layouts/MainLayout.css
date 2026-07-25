@@ -1,0 +1,41 @@
+/* Whole Application */
+
+.app-container {
+
+    min-height: 100vh;
+
+    background: #f5f7fb;
+
+}
+
+/* Main Page Content */
+
+.content-body {
+
+    margin-top: 70px;      /* Navbar Height */
+
+    padding: 30px;
+
+    min-height: calc(100vh - 70px);
+
+    overflow-y: auto;
+
+}
+
+/* Dark Overlay */
+
+.drawer-overlay {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,.35);
+
+    z-index: 1090;
+
+}

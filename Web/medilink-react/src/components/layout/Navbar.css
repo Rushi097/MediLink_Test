@@ -1,0 +1,233 @@
+/* ===========================
+   Navbar
+=========================== */
+
+.navbar-custom {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 70px;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    box-sizing: border-box;
+
+    z-index: 1000;
+
+}
+
+/* ===========================
+   Left
+=========================== */
+
+.navbar-left {
+
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+}
+
+/* ===========================
+   Center
+=========================== */
+
+.navbar-center {
+
+    flex: 2;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+/* ===========================
+   Right
+=========================== */
+
+.navbar-right {
+
+    flex: 1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+/* ===========================
+   Hamburger
+=========================== */
+
+.hamburger-btn {
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f4f6fb;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    font-size: 26px;
+
+    transition: all .3s ease;
+
+}
+
+.hamburger-btn:hover {
+
+    background: #e8eefb;
+
+    color: #0b5ed7;
+
+}
+
+/* ===========================
+   Search
+=========================== */
+
+.search-wrapper {
+
+    width: 100%;
+    max-width: 500px;
+
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 18px;
+
+    background: #f5f7fb;
+
+    border-radius: 30px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.search-wrapper i {
+
+    color: #6c757d;
+
+    font-size: 18px;
+
+}
+
+.search-box {
+
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 16px;
+
+}
+
+/* ===========================
+   Icons
+=========================== */
+
+.nav-icon {
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 22px;
+
+    transition: .25s ease;
+
+}
+
+.nav-icon:hover {
+
+    background: #f3f4f6;
+
+    color: #0b5ed7;
+
+    transform: translateY(-2px);
+
+}
+
+/* ===========================
+   User
+=========================== */
+
+.user-info {
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    cursor: pointer;
+
+}
+
+.user-info i {
+
+    font-size: 24px;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:768px){
+
+    .navbar-custom{
+
+        padding:0 15px;
+
+    }
+
+    .search-wrapper{
+
+        max-width:250px;
+
+    }
+
+    .navbar-right{
+
+        gap:12px;
+
+    }
+
+}
