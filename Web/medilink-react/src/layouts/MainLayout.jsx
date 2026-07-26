@@ -4,6 +4,7 @@ import { useState } from "react";
 import Sidebar from "../components/layout/Sidebar";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
+import MediBot from "../components/chatbot/MediBot";
 
 function MainLayout({ children }) {
 
@@ -38,6 +39,8 @@ function MainLayout({ children }) {
             <main className="content-body">
                 {children}
             </main>
+
+            <MediBot />
 
             <Footer />
 
