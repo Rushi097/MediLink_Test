@@ -6,7 +6,7 @@
     top: 0;
     left: 0;
 
-    width: 260px;
+    width: clamp(220px, 28vw, 280px);
     height: 100vh;
 
     background: linear-gradient(180deg, #0b2d6f 0%, #3a0b53 100%);
@@ -189,7 +189,7 @@
 
     .sidebar {
 
-        width: 100%;
+        width:clamp(220px,85vw,280px);
 
     }
 
