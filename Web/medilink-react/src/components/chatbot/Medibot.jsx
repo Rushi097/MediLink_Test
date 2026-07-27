@@ -4,7 +4,7 @@ import { RiRobot2Line } from "react-icons/ri";
 import MediBotHeader from "./MediBotHeader";
 import MediBotBody from "./MediBotBody";
 
-import "./Medibot.css";
+import "./MediBot.css";
 
 function MediBot() {
 
