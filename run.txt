@@ -1,0 +1,19 @@
+ASP.NET Core Razor/Blazor web application.
+run cmd
+( cd MediLink/src/MediLink.Web
+
+dotnet restore
+dotnet run )
+
+=========================================
+
+it's an ASP.NET Core project
+cmds
+
+( cd MediLink
+dotnet run --project src/MediLink.Api
+
+or
+
+dotnet run --project src/MediLink.Api/MediLink.Api.csproj
+)
