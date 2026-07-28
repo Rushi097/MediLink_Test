@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>medilink-api-local-2026-38040226</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

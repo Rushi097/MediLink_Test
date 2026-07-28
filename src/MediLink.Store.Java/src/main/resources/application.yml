@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: medilink-store-portal
+  datasource:
+    url: ${MEDILINK_DB_URL:jdbc:mysql://localhost:3306/MediLink?useSSL=false&serverTimezone=UTC}
+    username: ${MEDILINK_DB_USERNAME:root}
+    password: ${MEDILINK_DB_PASSWORD:}
+  jpa:
+    hibernate:
+      # The ASP.NET Core application owns its existing tables. Do not let Hibernate alter them.
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      static-locations: classpath:/static/,file:uploads/
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  sql:
+    init:
+      mode: always
+medilink:
+  # The absolute path is registered explicitly by UploadResourceConfig.
+  upload-dir: ${MEDILINK_UPLOADS_DIR:${user.dir}/uploads}
+server:
+  port: 8081

@@ -15,7 +15,11 @@ public class MedicinesController(MediLinkDbContext db) : ControllerBase
     {
         page = Math.Max(1, page); pageSize = Math.Clamp(pageSize, 1, 50);
         var query = db.Medicines.AsNoTracking().Where(m => m.IsActive);
-        if (!string.IsNullOrWhiteSpace(search)) query = query.Where(m => m.Name.Contains(search) || m.Category.Contains(search));
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            search = search.Trim();
+            query = query.Where(m => m.Name.Contains(search) || m.Category.Contains(search) || m.Description.Contains(search));
+        }
         if (!string.IsNullOrWhiteSpace(category)) query = query.Where(m => m.Category == category);
         var total = await query.CountAsync();
         var items = await query.OrderBy(m => m.Name).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();

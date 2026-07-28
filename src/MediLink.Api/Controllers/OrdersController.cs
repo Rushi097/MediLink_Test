@@ -29,5 +29,16 @@ public class OrdersController(MediLinkDbContext db) : ControllerBase
 
     [HttpPut("{id:guid}/cancel")]
     public async Task<IActionResult> Cancel(Guid id)
-    { var order = await db.Orders.FirstOrDefaultAsync(o => o.Id == id && o.UserId == UserId); if (order is null) return NotFound(new { success = false, message = "Order was not found." }); if (order.Status != OrderStatus.Placed) return BadRequest(new { success = false, message = "This order can no longer be cancelled." }); order.Status = OrderStatus.Cancelled; await db.SaveChangesAsync(); return Ok(new { success = true, item = order }); }
+    {
+        var order = await db.Orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.Id == id && o.UserId == UserId);
+        if (order is null) return NotFound(new { success = false, message = "Order was not found." });
+        if (order.Status != OrderStatus.Placed) return BadRequest(new { success = false, message = "This order can no longer be cancelled." });
+        var medicineIds = order.Items.Select(i => i.MedicineId).ToList();
+        var medicines = await db.Medicines.Where(m => medicineIds.Contains(m.Id)).ToDictionaryAsync(m => m.Id);
+        foreach (var item in order.Items)
+            if (medicines.TryGetValue(item.MedicineId, out var medicine)) medicine.StockQuantity += item.Quantity;
+        order.Status = OrderStatus.Cancelled;
+        await db.SaveChangesAsync();
+        return Ok(new { success = true, item = order });
+    }
 }

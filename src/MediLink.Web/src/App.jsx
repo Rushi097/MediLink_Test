@@ -1,49 +1,87 @@
 import { BrowserRouter, Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
+import axios from 'axios'
 import { FaCartShopping, FaMagnifyingGlass, FaPills, FaShieldHeart, FaTruckMedical } from 'react-icons/fa6'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import StoreRegister from './pages/auth/StoreRegister'
 import './styles.css'
+import './medicine-search.css'
 
-const medicines = [
-  { id: 1, name: 'Dolo 650 Tablet', category: 'Fever & pain', price: 32, pack: '15 tablets', icon: '💊', color: 'blue' },
-  { id: 2, name: 'Cetirizine 10mg', category: 'Allergy care', price: 24, pack: '10 tablets', icon: '🌿', color: 'green' },
-  { id: 3, name: 'Vitamin C 500mg', category: 'Vitamins', price: 145, pack: '30 chewable tablets', icon: '🍊', color: 'orange' },
-  { id: 4, name: 'Digene Gel', category: 'Digestive care', price: 118, pack: '200 ml', icon: '🧪', color: 'purple' },
-  { id: 5, name: 'ORS Electrolyte', category: 'Wellness', price: 38, pack: '200 ml', icon: '💧', color: 'teal' },
-  { id: 6, name: 'Volini Spray', category: 'Pain relief', price: 210, pack: '100 g', icon: '🩹', color: 'pink' },
-]
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5140/api'
+const client = () => axios.create({ baseURL: apiUrl, headers: { Authorization: `Bearer ${localStorage.getItem('medilink-token')}` } })
+const user = () => JSON.parse(localStorage.getItem('medilink-user') || 'null')
+const money = value => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(value || 0)
+const medicineReference = [
+  ['Dolo 650', 'Fever & pain', 'Paracetamol tablet for fever and mild pain.'], ['Crocin', 'Fever & pain', 'Paracetamol medicine for fever and pain relief.'], ['Combiflam', 'Fever & pain', 'Ibuprofen and paracetamol pain-relief medicine.'],
+  ['Cetirizine', 'Allergy care', 'Antihistamine for allergy symptoms.'], ['Allegra', 'Allergy care', 'Antihistamine for seasonal allergies.'], ['Azithromycin', 'Prescription medicine', 'Antibiotic; use only with a clinician prescription.'],
+  ['Amoxicillin', 'Prescription medicine', 'Antibiotic; use only with a clinician prescription.'], ['Pantoprazole', 'Digestive care', 'Acid-reducing medicine for gastric symptoms.'], ['Gelusil', 'Digestive care', 'Antacid for acidity and indigestion.'],
+  ['Benadryl', 'Cough & cold', 'Cough and cold relief product.'], ['ORS', 'Wellness', 'Oral rehydration salts for hydration support.'], ['Vitamin D3', 'Vitamins', 'Vitamin D nutritional supplement.'],
+  ['Becosules', 'Vitamins', 'Vitamin B-complex nutritional supplement.'], ['Metformin', 'Diabetes care', 'Prescription medicine used in diabetes management.'], ['Amlodipine', 'Heart care', 'Prescription medicine used for blood-pressure management.'], ['Volini', 'Personal care', 'Topical pain-relief product.']
+].map(([name, category, description]) => ({ name, category, description }))
 
-function Shell() {
-  const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem('medilink-cart') || '[]'))
-  const [query, setQuery] = useState('')
-  const [notice, setNotice] = useState('')
-  const user = JSON.parse(localStorage.getItem('medilink-user') || 'null')
-  useEffect(() => localStorage.setItem('medilink-cart', JSON.stringify(cart)), [cart])
-  const add = (medicine) => { setCart(items => [...items, medicine]); setNotice(`${medicine.name} added to cart`); setTimeout(() => setNotice(''), 2200) }
-  const filtered = useMemo(() => medicines.filter(m => `${m.name} ${m.category}`.toLowerCase().includes(query.toLowerCase())), [query])
-  const logout = () => { localStorage.removeItem('medilink-user'); localStorage.removeItem('medilink-token'); location.assign('/') }
-  return <>
-    <header className="nav"><Link className="brand" to="/"><span>✚</span> MediLink</Link><nav><a href="#medicines">Medicines</a><a href="#how">How it works</a></nav><div className="nav-actions">{user ? <><span className="welcome">Hi, {user.fullName?.split(' ')[0]}</span><button className="link-btn" onClick={logout}>Logout</button></> : <Link className="login-link" to="/login">Login</Link>}<a className="cart" href="#cart"><FaCartShopping /> <b>{cart.length}</b></a></div></header>
-    {notice && <div className="toast">✓ {notice}</div>}
-    <Routes>
-      <Route path="/" element={<Home query={query} setQuery={setQuery} products={filtered} add={add} />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
-    <Cart items={cart} setCart={setCart} />
-    <footer><div className="brand"><span>✚</span> MediLink</div><p>Your reliable partner for everyday healthcare.</p><small>© 2026 MediLink. Built with care.</small></footer>
-  </>
+function Header({ cartCount }) {
+  const nav = useNavigate(); const account = user()
+  const logout = () => { localStorage.removeItem('medilink-user'); localStorage.removeItem('medilink-token'); nav('/') }
+  return <header className="nav"><Link className="brand" to="/"><span>+</span>MediLink</Link><nav><Link to="/">Medicines</Link><a href="/#how">How it works</a><Link to="/medical-store">Medical store</Link><Link to="/admin">Admin</Link>{account && <Link to="/portal">My portal</Link>}</nav><div className="nav-actions">{account ? <><span className="welcome">Hi, {account.fullName?.split(' ')[0]}</span><button className="link-btn" onClick={logout}>Logout</button></> : <><Link className="login-link" to="/login">Login</Link><Link className="nav-cta" to="/register">Sign up</Link></>}<Link className="cart" to="/cart"><FaCartShopping /> <b>{cartCount}</b></Link></div></header>
 }
 
-function Home({ query, setQuery, products, add }) { return <main>
-  <section className="hero"><div className="hero-copy"><span className="eyebrow">HEALTHCARE, SIMPLIFIED</span><h1>Care that comes<br /><em>closer to you.</em></h1><p>Order genuine medicines, wellness essentials and healthcare products from trusted pharmacies.</p><div className="search"><FaMagnifyingGlass /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search medicines, health products..." /><button>Search</button></div><div className="trust"><span>✓ Genuine products</span><span>✓ Licensed pharmacies</span><span>✓ Secure payments</span></div></div><div className="hero-art"><div className="cross">✚</div><div className="art-card card-one">💊<small>Verified medicines</small></div><div className="art-card card-two">🧑‍⚕️<small>Expert care</small></div><div className="art-card card-three">🩺<small>Health first</small></div></div></section>
-  <section className="benefits"><div><FaShieldHeart /><b>100% Genuine</b><span>Sourced from verified sellers</span></div><div><FaTruckMedical /><b>Fast delivery</b><span>At your doorstep, on time</span></div><div><FaPills /><b>Wide selection</b><span>All your health needs in one place</span></div></section>
-  <section className="catalog" id="medicines"><div className="section-heading"><div><span className="eyebrow">SHOP BY CATEGORY</span><h2>Find what you need</h2></div><a href="#medicines">View all medicines →</a></div><div className="categories">{['Fever & pain','Diabetes care','Vitamins','Personal care','Baby care','Ayurveda'].map((x,i)=><button key={x} onClick={()=>setQuery(x)}><span>{['💊','🩸','🍊','✨','🧸','🌿'][i]}</span>{x}</button>)}</div></section>
-  <section className="catalog"><div className="section-heading"><div><span className="eyebrow">POPULAR PRODUCTS</span><h2>Everyday health essentials</h2></div></div><div className="products">{products.map(m=><article className="product" key={m.id}><div className={`product-icon ${m.color}`}>{m.icon}<span>In stock</span></div><p>{m.category}</p><h3>{m.name}</h3><small>{m.pack}</small><div className="price"><b>₹{m.price}</b><button onClick={()=>add(m)}>Add +</button></div></article>)}</div>{products.length===0&&<p className="empty">No medicines found. Try a different search.</p>}</section>
-  <section className="steps" id="how"><span className="eyebrow">HOW MEDILINK WORKS</span><h2>Healthcare in three easy steps</h2><div><article><b>1</b><h3>Search & select</h3><p>Find medicines from a wide, trusted catalogue.</p></article><article><b>2</b><h3>Add to cart</h3><p>Review your essentials and place your order securely.</p></article><article><b>3</b><h3>Get it delivered</h3><p>Receive your healthcare products at your doorstep.</p></article></div></section>
- </main> }
+function Home({ add }) {
+  const [inventory, setInventory] = useState([]); const [query, setQuery] = useState(''); const [loading, setLoading] = useState(true)
+  useEffect(() => { const timer = setTimeout(async () => { setLoading(true); try { const { data } = await axios.get(`${apiUrl}/medicines`, { params: { pageSize: 50 } }); setInventory(data.items || []) } finally { setLoading(false) } }, 220); return () => clearTimeout(timer) }, [])
+  const products = useMemo(() => {
+    const normalized = query.trim().toLowerCase()
+    const terms = normalized.split(/\s+/).filter(Boolean)
+    const matches = item => !terms.length || terms.every(term => `${item.name} ${item.category} ${item.description}`.toLowerCase().includes(term))
+    const inventoryByName = new Map(inventory.map(item => [item.name.trim().toLowerCase(), item]))
+    const referenceMatches = normalized ? medicineReference.filter(matches) : []
+    const inventoryMatches = inventory.filter(matches)
+    const unavailable = referenceMatches.filter(item => !inventoryByName.has(item.name.toLowerCase())).map(item => ({ ...item, id: `reference-${item.name}`, stockQuantity: 0, unavailable: true }))
+    const results = [...inventoryMatches, ...unavailable]
+    return results.length || !normalized ? results : [{ id: `reference-${normalized}`, name: query.trim(), category: 'Medicine search', description: 'This medicine is not currently listed in the MediLink reference catalogue or local inventory.', stockQuantity: 0, unavailable: true }]
+  }, [inventory, query])
+  const categories = ['Fever & pain', 'Allergy care', 'Vitamins', 'Wellness', 'Personal care', 'Diabetes care']
+  return <main>
+    <section className="hero"><div className="hero-copy"><span className="eyebrow">TRUSTED LOCAL HEALTHCARE</span><h1>Care that comes<br /><em>closer to you.</em></h1><p>Discover genuine medicines and wellness essentials from licensed pharmacies, delivered to your doorstep.</p><div className="search"><FaMagnifyingGlass /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search medicines, brands or health products" /><button>Search</button></div><div className="trust"><span>✓ Genuine products</span><span>✓ Licensed pharmacies</span><span>✓ Secure ordering</span></div></div><div className="hero-art"><div className="cross">+</div><div className="art-card card-one">💊<small>Verified medicines</small></div><div className="art-card card-two">🩺<small>Expert care</small></div><div className="art-card card-three">🛍️<small>Easy ordering</small></div></div></section>
+    <section className="benefits"><div><FaShieldHeart /><b>100% genuine</b><span>Sourced from verified sellers</span></div><div><FaTruckMedical /><b>Fast delivery</b><span>At your doorstep, on time</span></div><div><FaPills /><b>Healthcare range</b><span>Everyday needs in one place</span></div></section>
+    <section className="catalog"><div className="section-heading"><div><span className="eyebrow">SHOP BY CATEGORY</span><h2>Find what you need</h2></div></div><div className="categories">{categories.map((x, i) => <button key={x} onClick={() => setQuery(x)}><span>{['💊', '🌿', '🍊', '💧', '✨', '🩸'][i]}</span>{x}</button>)}</div></section>
+    <section className="catalog" id="medicines"><div className="section-heading"><div><span className="eyebrow">MEDICINE CATALOGUE</span><h2>{query ? 'Medicine search results' : 'Healthcare essentials'}</h2></div><button className="plain-button" onClick={() => setQuery('')}>View all</button></div>{query && <p className="search-note">Searching MediLink inventory and the medicine reference catalogue. Only medicines marked <b>Available</b> can be ordered.</p>}<div className="products">{products.map(m => { const available = m.stockQuantity > 0; return <article className={`product ${available ? '' : 'unavailable'}`} key={m.id}><div className="product-icon blue">💊<span className={available ? 'availability available' : 'availability unavailable'}>{available ? 'Available' : 'Unavailable'}</span></div><p>{m.category}</p><h3>{m.name}</h3><small>{m.description}</small><div className="price"><b>{available ? money(m.price) : 'Not stocked'}</b><button disabled={!available} onClick={() => add(m)}>{available ? 'Add +' : 'Unavailable'}</button></div></article> })}</div>{loading && <p className="empty">Loading medicines…</p>}{!loading && !products.length && <p className="empty">No matching medicine was found in the catalogue.</p>}</section>
+    <section className="steps" id="how"><span className="eyebrow">HOW MEDILINK WORKS</span><h2>Healthcare in three easy steps</h2><div><article><b>1</b><h3>Search & select</h3><p>Find products from a trusted catalogue.</p></article><article><b>2</b><h3>Upload prescription</h3><p>Provide a valid prescription where it is required.</p></article><article><b>3</b><h3>Track delivery</h3><p>Follow your order from confirmation to doorstep.</p></article></div></section>
+  </main>
+}
 
-function Cart({items,setCart}) { const total=items.reduce((n,x)=>n+x.price,0); return <aside className="cart-drawer" id="cart"><h3>Your cart <small>{items.length} item(s)</small></h3>{items.length ? <>{items.map((x,i)=><div className="cart-row" key={`${x.id}-${i}`}><span>{x.icon}</span><div>{x.name}<small>₹{x.price}</small></div><button onClick={()=>setCart(items.filter((_,index)=>index!==i))}>×</button></div>)}<div className="total">Total <b>₹{total}</b></div><button className="checkout">Proceed to checkout</button></> : <p>Your cart is empty. Add products to get started.</p>}</aside> }
-export default function App(){ return <BrowserRouter><Shell /></BrowserRouter> }
+function Cart({ items, setItems }) {
+  const account = user(); const nav = useNavigate(); const [address, setAddress] = useState(''); const [message, setMessage] = useState(''); const total = useMemo(() => items.reduce((sum, item) => sum + item.price * item.quantity, 0), [items])
+  const checkout = async () => { if (!account) return nav('/login'); if (!address.trim()) return setMessage('Enter a delivery address to continue.'); try { await client().post('/orders', { deliveryAddress: address }); setItems([]); setMessage('Order placed successfully. You can track it in My portal.'); } catch (e) { setMessage(e.response?.data?.message || 'Checkout failed. Ensure items are in your server cart.') } }
+  return <main className="page-wrap"><section className="cart-page"><div><span className="eyebrow">YOUR ORDER</span><h1>Shopping cart</h1>{items.length ? items.map(item => <div className="cart-row" key={item.id}><span>💊</span><div><b>{item.name}</b><small>{money(item.price)} each</small></div><div className="quantity"><button onClick={() => setItems(items.map(x => x.id === item.id ? { ...x, quantity: Math.max(1, x.quantity - 1) } : x))}>−</button>{item.quantity}<button onClick={() => setItems(items.map(x => x.id === item.id ? { ...x, quantity: x.quantity + 1 } : x))}>+</button></div><button className="remove" onClick={() => setItems(items.filter(x => x.id !== item.id))}>Remove</button></div>) : <p className="empty">Your cart is empty. <Link to="/">Explore medicines</Link></p>}</div><aside className="order-summary"><h3>Order summary</h3><div><span>Items total</span><b>{money(total)}</b></div><div><span>Delivery</span><b>Calculated at checkout</b></div><hr /><div className="total">Total <b>{money(total)}</b></div><label>Delivery address<textarea value={address} onChange={e => setAddress(e.target.value)} placeholder="House / street / landmark / PIN code" /></label>{message && <p className="form-message">{message}</p>}<button className="checkout" disabled={!items.length} onClick={checkout}>{account ? 'Place secure order' : 'Sign in to checkout'}</button></aside></section></main>
+}
+
+function InventoryManager() {
+  const [form, setForm] = useState({ name: '', category: '', description: '', price: '', stockQuantity: '' }); const [message, setMessage] = useState(''); const [saving, setSaving] = useState(false)
+  const submit = async event => { event.preventDefault(); setSaving(true); setMessage(''); try { await client().post('/medicines', { ...form, price: Number(form.price), stockQuantity: Number(form.stockQuantity) }); setForm({ name: '', category: '', description: '', price: '', stockQuantity: '' }); setMessage('Medicine saved in MySQL and is now searchable in the customer catalogue.') } catch (requestError) { setMessage(requestError.response?.data?.message || 'Could not save medicine. Check every field.') } finally { setSaving(false) } }
+  const change = event => setForm({ ...form, [event.target.name]: event.target.value })
+  return <section className="portal-panel inventory-form"><h2>Add medicine to catalogue</h2><p>New products are stored in MySQL and immediately appear in customer search.</p><form onSubmit={submit}><div className="two"><label>Medicine name<input name="name" value={form.name} required onChange={change} /></label><label>Category<input name="category" value={form.category} required onChange={change} placeholder="e.g. Vitamins" /></label></div><label>Description<input name="description" value={form.description} required onChange={change} /></label><div className="two"><label>Price (₹)<input name="price" type="number" step="0.01" min="0.01" value={form.price} required onChange={change} /></label><label>Stock quantity<input name="stockQuantity" type="number" min="0" value={form.stockQuantity} required onChange={change} /></label></div><button className="primary inline" disabled={saving}>{saving ? 'Saving…' : 'Add medicine'}</button>{message && <p className="form-message">{message}</p>}</form></section>
+}
+
+function Portal({ requiredRole }) {
+  const account = user(); const [data, setData] = useState(null); const [orders, setOrders] = useState([]); const [error, setError] = useState('')
+  useEffect(() => { if (!account) return; const role = account.role?.toLowerCase().replace('storeowner', 'store'); Promise.all([client().get(`/dashboard/${role}`), account.role === 'Customer' ? client().get('/orders') : Promise.resolve({ data: { items: [] } })]).then(([dashboard, orderData]) => { setData(dashboard.data); setOrders(orderData.data.items || []) }).catch(() => setError('We could not load your portal. Please sign in again.')) }, [account?.role])
+  if (!account) return <RoleLanding role={requiredRole} />
+  if (requiredRole && account.role !== requiredRole) return <main className="page-wrap"><h1>Access restricted</h1><p>This workspace requires a {requiredRole === 'StoreOwner' ? 'medical-store owner' : 'platform administrator'} account.</p><Link className="primary inline" to="/portal">Open my portal</Link></main>
+  const roleName = account.role === 'StoreOwner' ? 'Medical store' : account.role
+  const metrics = data && account.role === 'Customer' ? [['Orders', data.orderCount], ['Active deliveries', data.activeOrders]] : data && account.role === 'StoreOwner' ? [['Active products', data.activeProducts], ['Low stock', data.lowStock], ['Inventory value', money(data.inventoryValue)]] : data ? [['Customers', data.customers], ['Pharmacy owners', data.pharmacyOwners], ['Medicines', data.medicines], ['Pending orders', data.pendingOrders], ['Delivered revenue', money(data.deliveredRevenue)]] : []
+  return <main className="page-wrap portal"><span className="eyebrow">{roleName.toUpperCase()} PORTAL</span><h1>Welcome back, {account.fullName?.split(' ')[0]}</h1><p>Manage your MediLink activity from one place.</p>{error && <p className="form-error">{error}</p>}<section className="metric-grid">{metrics.map(([label, value]) => <article key={label}><span>{label}</span><b>{value}</b></article>)}</section>{account.role === 'Customer' && <section className="portal-panel"><h2>Recent orders</h2>{orders.length ? <div className="orders">{orders.map(order => <div key={order.id}><span>#{order.id.slice(0, 8)}</span><b>{money(order.totalAmount)}</b><em className={`status ${order.status.toLowerCase()}`}>{order.status}</em></div>)}</div> : <p>No orders yet. <Link to="/">Start shopping</Link>.</p>}</section>}{account.role === 'StoreOwner' && <InventoryManager />}{account.role === 'Admin' && <section className="portal-panel"><h2>Administration</h2><p>Platform statistics are calculated from the MySQL database. Product management is available through the secured medicine APIs.</p><a className="primary inline" href="http://localhost:5140/swagger" target="_blank">Open API console</a></section>}</main>
+}
+
+function RoleLanding({ role }) {
+  const store = role === 'StoreOwner'
+  return <main className="page-wrap role-landing"><span className="eyebrow">{store ? 'MEDICAL STORE PARTNER' : 'MEDILINK ADMINISTRATION'}</span><h1>{store ? 'Run your pharmacy online.' : 'Operate MediLink with confidence.'}</h1><p>{store ? 'Register your pharmacy, manage your catalogue and monitor low-stock inventory from the store workspace.' : 'Monitor users, pharmacies, catalogue health and delivered revenue from the secured admin dashboard.'}</p><div className="role-actions">{store && <Link className="primary inline" to="/register-store">Register medical store</Link>}<Link className="secondary inline" to="/login">{store ? 'Store owner login' : 'Admin login'}</Link></div>{!store && <p className="role-note">Admin accounts are provisioned by the platform team; they cannot be created through the public website.</p>}</main>
+}
+
+function Shell() {
+  const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem('medilink-cart') || '[]')); const [notice, setNotice] = useState('')
+  useEffect(() => localStorage.setItem('medilink-cart', JSON.stringify(cart)), [cart])
+  const add = async medicine => { setCart(items => { const found = items.find(x => x.id === medicine.id); return found ? items.map(x => x.id === medicine.id ? { ...x, quantity: x.quantity + 1 } : x) : [...items, { ...medicine, quantity: 1 }] }); if (user()) { try { await client().post('/cart/items', { medicineId: medicine.id, quantity: 1 }) } catch { setNotice('Added locally. Sign in again to sync your cart.') } } setNotice(`${medicine.name} added to cart`); setTimeout(() => setNotice(''), 2400) }
+  return <><Header cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)} />{notice && <div className="toast">✓ {notice}</div>}<Routes><Route path="/" element={<Home add={add} />} /><Route path="/cart" element={<Cart items={cart} setItems={setCart} />} /><Route path="/portal" element={<Portal />} /><Route path="/medical-store" element={<Portal requiredRole="StoreOwner" />} /><Route path="/admin" element={<Portal requiredRole="Admin" />} /><Route path="/login" element={<Login />} /><Route path="/register" element={<Register />} /><Route path="/register-store" element={<StoreRegister />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes><footer><div className="brand"><span>+</span>MediLink</div><p>Hyperlocal healthcare, delivered responsibly.</p><small>© 2026 MediLink · Prescription medicines are supplied only after pharmacist verification.</small></footer></>
+}
+export default function App() { return <BrowserRouter><Shell /></BrowserRouter> }
