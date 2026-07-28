@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dashboard · MediLink Store</title><link rel="stylesheet" th:href="@{/css/store.css}"></head>
+<body><header th:replace="~{fragments :: header}"></header><main class="container">
+  <section class="page-heading"><div><span class="eyebrow">STORE OWNER WORKSPACE</span><h1 th:text="${store.name}">Medical Store</h1><p th:text="${store.address}">Store address</p></div><a class="button secondary" th:href="@{/products}">Add product</a></section>
+  <section class="stats"><article><span>Listed products</span><strong th:text="${inventoryCount}">0</strong><a th:href="@{/products}">View inventory</a></article><article><span>Low-stock products</span><strong th:text="${lowStock}">0</strong><small>10 units or fewer</small></article><article><span>Orders to fulfil</span><strong th:text="${claimedOrders}">0</strong><a th:href="@{/orders}">Open orders</a></article></section>
+  <section class="panel"><h2>Quick actions</h2><div class="quick-actions"><a th:href="@{/products}">Inventory & products <span>→</span></a><a th:href="@{/orders}">Orders & deliveries <span>→</span></a></div></section>
+</main></body></html>

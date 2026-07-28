@@ -4,7 +4,6 @@
     <Project Path="src/MediLink.Cli/MediLink.Cli.csproj" />
     <Project Path="src/MediLink.Core/MediLink.Core.csproj" />
     <Project Path="src/MediLink.Infrastructure/MediLink.Infrastructure.csproj" />
-    <Project Path="src/MediLink.Web/MediLink.Web.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/MediLink.Tests/MediLink.Tests.csproj" />

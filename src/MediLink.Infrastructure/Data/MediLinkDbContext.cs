@@ -11,6 +11,11 @@ public class MediLinkDbContext : DbContext
     public DbSet<CustomerProfile> CustomerProfiles => Set<CustomerProfile>();
     public DbSet<StoreOwnerProfile> StoreOwnerProfiles => Set<StoreOwnerProfile>();
     public DbSet<Store> Stores => Set<Store>();
+    public DbSet<Medicine> Medicines => Set<Medicine>();
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,5 +40,20 @@ public class MediLinkDbContext : DbContext
             .HasMany(s => s.Stores)
             .WithOne(st => st.StoreOwnerProfile)
             .HasForeignKey(st => st.StoreOwnerProfileId);
+
+        modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+        modelBuilder.Entity<User>().HasOne(u => u.Cart).WithOne(c => c.User)
+            .HasForeignKey<Cart>(c => c.UserId).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<CartItem>().HasOne(i => i.Cart).WithMany(c => c.Items)
+            .HasForeignKey(i => i.CartId).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<CartItem>().HasOne(i => i.Medicine).WithMany()
+            .HasForeignKey(i => i.MedicineId).OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Order>().HasOne(o => o.User).WithMany(u => u.Orders)
+            .HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<OrderItem>().HasOne(i => i.Order).WithMany(o => o.Items)
+            .HasForeignKey(i => i.OrderId).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Medicine>().Property(m => m.Price).HasPrecision(10, 2);
+        modelBuilder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(10, 2);
+        modelBuilder.Entity<OrderItem>().Property(i => i.UnitPrice).HasPrecision(10, 2);
     }
 }

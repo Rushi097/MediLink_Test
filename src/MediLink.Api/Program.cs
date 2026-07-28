@@ -3,6 +3,7 @@ using MediLink.Core.Interfaces;
 using MediLink.Infrastructure.Data;
 using MediLink.Infrastructure.Repositories;
 using MediLink.Infrastructure.Services;
+using MediLink.Api.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,11 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 // -----------------------------------------------------------------------------
 // 1. Database Context Setup (Entity Framework Core)
 // -----------------------------------------------------------------------------
-// builder.Services.AddDbContext<MediLinkDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-    builder.Services.AddDbContext<MediLinkDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("DefaultConnection is not configured.");
+var mysqlVersion = Version.Parse(builder.Configuration["MySql:ServerVersion"] ?? "8.0.36");
+builder.Services.AddDbContext<MediLinkDbContext>(options =>
+    options.UseMySql(connectionString, new MySqlServerVersion(mysqlVersion)));
 
 // -----------------------------------------------------------------------------
 // 2. Dependency Injection: Repositories & Application Services
@@ -28,7 +29,10 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 // -----------------------------------------------------------------------------
 // 3. JWT Authentication & Authorization Configuration
 // -----------------------------------------------------------------------------
-var jwtSecret = builder.Configuration["JwtSettings:Secret"] ?? "DefaultFallbackSecretKey_PleaseChangeInAppSettings_Minimum32Chars!";
+var jwtSecret = builder.Configuration["JwtSettings:Secret"]
+    ?? throw new InvalidOperationException("JwtSettings:Secret must be configured with user secrets or environment variables.");
+if (jwtSecret.Length < 32)
+    throw new InvalidOperationException("JwtSettings:Secret must be at least 32 characters long.");
 var jwtIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "MediLinkApi";
 var jwtAudience = builder.Configuration["JwtSettings:Audience"] ?? "MediLinkClients";
 
@@ -52,6 +56,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("mysql");
 
 // -----------------------------------------------------------------------------
 // 4. CORS Policy Configuration
@@ -99,6 +104,8 @@ builder.Services.AddSwaggerGen(c =>
 // -----------------------------------------------------------------------------
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -119,5 +126,26 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
+
+if (app.Environment.IsDevelopment())
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var db = scope.ServiceProvider.GetRequiredService<MediLinkDbContext>();
+    await db.Database.MigrateAsync();
+    await DatabaseSeeder.SeedAsync(db);
+    if (!await db.Users.AnyAsync(user => user.Role == MediLink.Core.Enums.UserRole.Admin))
+    {
+        db.Users.Add(new MediLink.Core.Entities.User
+        {
+            Email = "admin@medilink.local",
+            FirstName = "MediLink",
+            LastName = "Admin",
+            Role = MediLink.Core.Enums.UserRole.Admin,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123")
+        });
+        await db.SaveChangesAsync();
+    }
+}
 
 app.Run();

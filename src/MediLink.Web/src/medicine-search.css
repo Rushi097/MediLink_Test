@@ -1,0 +1,23 @@
+.search-note {
+    margin: -10px 0 18px;
+    color: #58737f;
+    font-size: 13px;
+}
+
+.product.unavailable {
+    opacity: .78;
+}
+
+.product.unavailable .product-icon {
+    filter: grayscale(.45);
+}
+
+.product-icon .availability.unavailable {
+    color: #a44343;
+    background: #fff3f3;
+}
+
+.price button:disabled {
+    cursor: not-allowed;
+    opacity: .65;
+}

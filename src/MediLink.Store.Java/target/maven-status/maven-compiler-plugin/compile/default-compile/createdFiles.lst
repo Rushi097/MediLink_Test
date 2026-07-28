@@ -1,0 +1,8 @@
+com\medilink\store\service\StoreInventoryService.class
+com\medilink\store\config\UploadResourceConfig.class
+com\medilink\store\service\StoreRegistrationService.class
+com\medilink\store\service\StoreUserDetailsService$Account.class
+com\medilink\store\web\StorePortalExceptionHandler.class
+com\medilink\store\web\StorePortalException.class
+com\medilink\store\web\StoreRegistrationForm.class
+com\medilink\store\service\StoreLookupService.class
