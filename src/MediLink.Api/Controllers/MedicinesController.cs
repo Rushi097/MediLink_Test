@@ -1,48 +1,51 @@
+using MediLink.Core.DTOs;
+using MediLink.Core.Entities;
+using MediLink.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediLink.Api.Controllers;
 
-/// <summary>
-/// Public medicine catalogue. This seed catalogue keeps the React client usable
-/// while the database-backed inventory module is developed.
-/// </summary>
-[ApiController]
-[Route("api/[controller]")]
-public class MedicinesController : ControllerBase
+[ApiController, Route("api/[controller]")]
+public class MedicinesController(MediLinkDbContext db) : ControllerBase
 {
-    private static readonly IReadOnlyList<MedicineResponse> Catalogue =
-    [
-        new(1, "Dolo 650 Tablet", "Fever & pain", 32, "15 tablets", true),
-        new(2, "Cetirizine 10mg", "Allergy care", 24, "10 tablets", true),
-        new(3, "Vitamin C 500mg", "Vitamins", 145, "30 chewable tablets", true),
-        new(4, "Digene Gel", "Digestive care", 118, "200 ml", true),
-        new(5, "ORS Electrolyte", "Wellness", 38, "200 ml", true),
-        new(6, "Volini Spray", "Pain relief", 210, "100 g", true)
-    ];
-
     [HttpGet]
-    public IActionResult GetAll([FromQuery] string? search, [FromQuery] string? category)
+    public async Task<IActionResult> GetAll([FromQuery] string? search, [FromQuery] string? category, [FromQuery] int page = 1, [FromQuery] int pageSize = 12)
     {
-        var medicines = Catalogue.Where(m =>
-            (string.IsNullOrWhiteSpace(search) ||
-             m.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
-             m.Category.Contains(search, StringComparison.OrdinalIgnoreCase)) &&
-            (string.IsNullOrWhiteSpace(category) || m.Category.Equals(category, StringComparison.OrdinalIgnoreCase)));
-
-        return Ok(new { success = true, items = medicines, total = medicines.Count() });
+        page = Math.Max(1, page); pageSize = Math.Clamp(pageSize, 1, 50);
+        var query = db.Medicines.AsNoTracking().Where(m => m.IsActive);
+        if (!string.IsNullOrWhiteSpace(search)) query = query.Where(m => m.Name.Contains(search) || m.Category.Contains(search));
+        if (!string.IsNullOrWhiteSpace(category)) query = query.Where(m => m.Category == category);
+        var total = await query.CountAsync();
+        var items = await query.OrderBy(m => m.Name).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+        return Ok(new { success = true, items, total, page, pageSize });
     }
 
-    [HttpGet("{id:int}")]
-    public IActionResult GetById(int id)
-    {
-        var medicine = Catalogue.FirstOrDefault(m => m.Id == id);
-        return medicine is null
-            ? NotFound(new { success = false, message = "Medicine was not found." })
-            : Ok(new { success = true, item = medicine });
-    }
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id) => await db.Medicines.FindAsync(id) is { IsActive: true } medicine
+        ? Ok(new { success = true, item = medicine }) : NotFound(new { success = false, message = "Medicine was not found." });
 
     [HttpGet("categories")]
-    public IActionResult GetCategories() => Ok(new { success = true, items = Catalogue.Select(m => m.Category).Distinct() });
+    public async Task<IActionResult> Categories() => Ok(new { success = true, items = await db.Medicines.Where(m => m.IsActive).Select(m => m.Category).Distinct().OrderBy(c => c).ToListAsync() });
 
-    public record MedicineResponse(int Id, string Name, string Category, decimal Price, string PackSize, bool InStock);
+    [HttpPost, Authorize(Roles = "Admin,StoreOwner")]
+    public async Task<IActionResult> Create(MedicineCreateRequest request)
+    {
+        var medicine = new Medicine { Name = request.Name.Trim(), Category = request.Category.Trim(), Description = request.Description.Trim(), Price = request.Price, StockQuantity = request.StockQuantity, ImageUrl = request.ImageUrl };
+        db.Medicines.Add(medicine); await db.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetById), new { id = medicine.Id }, new { success = true, item = medicine });
+    }
+
+    [HttpPut("{id:guid}"), Authorize(Roles = "Admin,StoreOwner")]
+    public async Task<IActionResult> Update(Guid id, MedicineCreateRequest request)
+    {
+        var medicine = await db.Medicines.FindAsync(id); if (medicine is null) return NotFound(new { success = false, message = "Medicine was not found." });
+        medicine.Name = request.Name.Trim(); medicine.Category = request.Category.Trim(); medicine.Description = request.Description.Trim(); medicine.Price = request.Price; medicine.StockQuantity = request.StockQuantity; medicine.ImageUrl = request.ImageUrl;
+        await db.SaveChangesAsync(); return Ok(new { success = true, item = medicine });
+    }
+
+    [HttpDelete("{id:guid}"), Authorize(Roles = "Admin,StoreOwner")]
+    public async Task<IActionResult> Archive(Guid id)
+    { var medicine = await db.Medicines.FindAsync(id); if (medicine is null) return NotFound(new { success = false, message = "Medicine was not found." }); medicine.IsActive = false; await db.SaveChangesAsync(); return Ok(new { success = true, message = "Medicine archived." }); }
 }

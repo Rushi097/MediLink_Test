@@ -1,10 +1,13 @@
-ASP.NET Core Razor/Blazor web application.
+ use windows powershell to run 
+ 
+ web application. with react + vite
 run cmd
-( cd MediLink/src/MediLink.Web
+( cd MediLink\src\MediLink.Web
+npm.cmd run dev
+ )
 
-dotnet restore
-dotnet run )
 
+its same as before 
 =========================================
 
 it's an ASP.NET Core project

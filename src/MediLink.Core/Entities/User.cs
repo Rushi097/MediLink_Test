@@ -15,4 +15,6 @@ public class User
     // Navigation properties for role-specific details
     public CustomerProfile? CustomerProfile { get; set; }
     public StoreOwnerProfile? StoreOwnerProfile { get; set; }
+    public Cart? Cart { get; set; }
+    public List<Order> Orders { get; set; } = new();
 }
