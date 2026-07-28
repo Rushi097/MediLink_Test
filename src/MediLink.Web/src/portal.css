@@ -1,3 +1,254 @@
-.nav-cta{background:#1275b9;color:#fff;padding:9px 13px;border-radius:7px;font-size:13px;font-weight:700}.page-wrap{max-width:1130px;margin:0 auto;padding:58px 24px;min-height:calc(100vh - 200px)}.cart-page{display:grid;grid-template-columns:1.35fr .65fr;gap:35px}.cart-page h1,.portal h1{font-size:36px;margin:8px 0 25px}.cart-page .cart-row{padding:17px 0;font-size:14px}.cart-page .cart-row b{display:block}.quantity{display:flex;gap:10px;align-items:center}.quantity button{border:1px solid var(--line)!important;border-radius:5px!important;color:var(--ink)!important;font-size:17px!important;width:27px;height:27px}.remove{font-size:12px!important;font-weight:700}.order-summary,.portal-panel{height:max-content;border:1px solid var(--line);border-radius:12px;padding:22px;background:#fbfdfd}.order-summary h3,.portal-panel h2{margin-top:0}.order-summary>div{display:flex;justify-content:space-between;font-size:13px;margin:13px 0}.order-summary label{display:block;font-size:12px;font-weight:700;margin:17px 0}.order-summary textarea{width:100%;min-height:84px;margin-top:7px;border:1px solid var(--line);border-radius:7px;padding:10px;resize:vertical;font:inherit}.form-message{font-size:12px;color:#28776f;background:#eaf8f4;padding:8px;border-radius:5px}.plain-button{border:0;background:transparent;color:#126fa9;font-weight:700;cursor:pointer}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:28px 0}.metric-grid article{border:1px solid var(--line);border-radius:10px;padding:20px;background:#fff}.metric-grid span{display:block;color:var(--muted);font-size:12px}.metric-grid b{display:block;font-size:24px;margin-top:9px}.orders>div{display:grid;grid-template-columns:1fr auto auto;gap:15px;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px}.status{font-style:normal;padding:4px 7px;border-radius:4px;background:#fdf2d8;color:#8d6600}.status.delivered{background:#e5f7ed;color:#24764b}.status.cancelled{background:#fde9e9;color:#9a3e3e}.inline{display:inline-block;margin-top:8px}@media(max-width:720px){.cart-page{grid-template-columns:1fr}.metric-grid{grid-template-columns:repeat(2,1fr)}.nav-cta{display:none}.cart-page h1,.portal h1{font-size:30px}}
-.role-landing{max-width:760px}.role-landing h1{font-size:40px;margin:10px 0}.role-landing p{color:var(--muted);line-height:1.7;max-width:650px}.role-actions{display:flex;gap:12px;margin-top:25px}.secondary{border:1px solid #1275b9;color:#1275b9;padding:12px 22px;border-radius:7px;font-weight:700}.role-note{font-size:13px;margin-top:25px}@media(max-width:720px){.role-landing h1{font-size:30px}}
-.inventory-form{margin-top:20px}.inventory-form label{display:block;font-size:12px;font-weight:700;margin:12px 0;color:#34505f}.inventory-form input{display:block;width:100%;border:1px solid var(--line);border-radius:7px;margin-top:6px;padding:10px;font:inherit}.inventory-form .form-message{margin-bottom:0}
+.nav-cta {
+    background: #1275b9;
+    color: #fff;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 700
+}
+
+.page-wrap {
+    max-width: 1130px;
+    margin: 0 auto;
+    padding: 58px 24px;
+    min-height: calc(100vh - 200px)
+}
+
+.cart-page {
+    display: grid;
+    grid-template-columns: 1.35fr .65fr;
+    gap: 35px
+}
+
+.cart-page h1,
+.portal h1 {
+    font-size: 36px;
+    margin: 8px 0 25px
+}
+
+.cart-page .cart-row {
+    padding: 17px 0;
+    font-size: 14px
+}
+
+.cart-page .cart-row b {
+    display: block
+}
+
+.quantity {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.quantity button {
+    border: 1px solid var(--line) !important;
+    border-radius: 5px !important;
+    color: var(--ink) !important;
+    font-size: 17px !important;
+    width: 27px;
+    height: 27px
+}
+
+.remove {
+    font-size: 12px !important;
+    font-weight: 700
+}
+
+.order-summary,
+.portal-panel {
+    height: max-content;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px;
+    background: #fbfdfd
+}
+
+.order-summary h3,
+.portal-panel h2 {
+    margin-top: 0
+}
+
+.order-summary>div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin: 13px 0
+}
+
+.order-summary label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 17px 0
+}
+
+.order-summary textarea {
+    width: 100%;
+    min-height: 84px;
+    margin-top: 7px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 10px;
+    resize: vertical;
+    font: inherit
+}
+
+.form-message {
+    font-size: 12px;
+    color: #28776f;
+    background: #eaf8f4;
+    padding: 8px;
+    border-radius: 5px
+}
+
+.plain-button {
+    border: 0;
+    background: transparent;
+    color: #126fa9;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 28px 0
+}
+
+.metric-grid article {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    background: #fff
+}
+
+.metric-grid span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px
+}
+
+.metric-grid b {
+    display: block;
+    font-size: 24px;
+    margin-top: 9px
+}
+
+.orders>div {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px
+}
+
+.status {
+    font-style: normal;
+    padding: 4px 7px;
+    border-radius: 4px;
+    background: #fdf2d8;
+    color: #8d6600
+}
+
+.status.delivered {
+    background: #e5f7ed;
+    color: #24764b
+}
+
+.status.cancelled {
+    background: #fde9e9;
+    color: #9a3e3e
+}
+
+.inline {
+    display: inline-block;
+    margin-top: 8px
+}
+
+@media(max-width:720px) {
+    .cart-page {
+        grid-template-columns: 1fr
+    }
+
+    .metric-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .nav-cta {
+        display: none
+    }
+
+    .cart-page h1,
+    .portal h1 {
+        font-size: 30px
+    }
+}
+
+.role-landing {
+    max-width: 760px
+}
+
+.role-landing h1 {
+    font-size: 40px;
+    margin: 10px 0
+}
+
+.role-landing p {
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 650px
+}
+
+.role-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px
+}
+
+.secondary {
+    border: 1px solid #1275b9;
+    color: #1275b9;
+    padding: 12px 22px;
+    border-radius: 7px;
+    font-weight: 700
+}
+
+.role-note {
+    font-size: 13px;
+    margin-top: 25px
+}
+
+@media(max-width:720px) {
+    .role-landing h1 {
+        font-size: 30px
+    }
+}
+
+.inventory-form {
+    margin-top: 20px
+}
+
+.inventory-form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 12px 0;
+    color: #34505f
+}
+
+.inventory-form input {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    margin-top: 6px;
+    padding: 10px;
+    font: inherit
+}
+
+.inventory-form .form-message {
+    margin-bottom: 0
+}
