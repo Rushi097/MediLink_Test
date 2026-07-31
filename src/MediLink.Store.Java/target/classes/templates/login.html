@@ -1,20 +1,32 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Store owner sign in · MediLink</title><link rel="stylesheet" th:href="@{/css/store.css}"></head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store owner sign in · MediLink</title>
+  <link rel="stylesheet" th:href="@{/css/store.css}">
+</head>
+
 <body class="login-page">
   <main class="login-card">
     <span class="eyebrow">MEDILINK · STORE PORTAL</span>
     <h1>Manage your medical store.</h1>
     <p>Sign in with your dedicated medical-store owner account.</p>
-    <div class="notice error" th:if="${param.error}">The email, password, or account role is not valid for this portal.</div>
-    <div class="notice success" th:if="${param.logout}">You have been signed out safely.</div><div class="notice success" th:if="${param.registered}">Your medical-store account is ready. Sign in below.</div>
+    <div class="notice error" th:if="${param.error}">The email, password, or account role is not valid for this portal.
+    </div>
+    <div class="notice success" th:if="${param.logout}">You have been signed out safely.</div>
+    <div class="notice success" th:if="${param.registered}">Your medical-store account is ready. Sign in below.</div>
     <form th:action="@{/login}" method="post" class="stack">
       <label>Email<input name="username" type="email" autocomplete="email" required autofocus></label>
       <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
       <button type="submit">Sign in to store portal</button>
     </form>
-    <div class="register-callout"><strong>New medical-store owner?</strong><span>Create a dedicated medical-store account here. Customer accounts cannot access this portal.</span><a th:href="@{/register}">Create medical-store account</a></div>
+    <div class="register-callout"><strong>New medical-store owner?</strong><span>Create a dedicated medical-store
+        account here. Customer accounts cannot access this portal.</span><a th:href="@{/register}">Create medical-store
+        account</a></div>
     <small>Customer and admin accounts cannot access this portal.</small>
   </main>
 </body>
+
 </html>

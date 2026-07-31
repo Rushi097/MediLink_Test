@@ -1,3 +1,36 @@
 package com.medilink.store.entity;
-import jakarta.persistence.*; import org.hibernate.annotations.JdbcTypeCode; import java.sql.Types; import java.time.LocalDateTime; import java.util.UUID;
-@Entity @Table(name="StoreOrderAssignments", uniqueConstraints=@UniqueConstraint(columnNames="OrderId")) public class StoreOrderAssignment { @Id @JdbcTypeCode(Types.VARCHAR) @Column(name="Id", columnDefinition="char(36)") private UUID id=UUID.randomUUID(); @JdbcTypeCode(Types.VARCHAR) @Column(name="StoreId", columnDefinition="char(36)") private UUID storeId; @JdbcTypeCode(Types.VARCHAR) @Column(name="OrderId", columnDefinition="char(36)") private UUID orderId; @Column(name="AssignedAt") private LocalDateTime assignedAt=LocalDateTime.now(); public StoreOrderAssignment(){} public StoreOrderAssignment(UUID storeId,UUID orderId){this.storeId=storeId;this.orderId=orderId;} public UUID getOrderId(){return orderId;} }
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import java.sql.Types;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Entity
+@Table(name = "StoreOrderAssignments", uniqueConstraints = @UniqueConstraint(columnNames = "OrderId"))
+public class StoreOrderAssignment {
+    @Id
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "Id", columnDefinition = "char(36)")
+    private UUID id = UUID.randomUUID();
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "StoreId", columnDefinition = "char(36)")
+    private UUID storeId;
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "OrderId", columnDefinition = "char(36)")
+    private UUID orderId;
+    @Column(name = "AssignedAt")
+    private LocalDateTime assignedAt = LocalDateTime.now();
+
+    public StoreOrderAssignment() {
+    }
+
+    public StoreOrderAssignment(UUID storeId, UUID orderId) {
+        this.storeId = storeId;
+        this.orderId = orderId;
+    }
+
+    public UUID getOrderId() {
+        return orderId;
+    }
+}

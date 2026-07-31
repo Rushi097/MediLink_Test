@@ -1,3 +1,56 @@
 package com.medilink.store.entity;
-import jakarta.persistence.*; import org.hibernate.annotations.JdbcTypeCode; import java.math.BigDecimal; import java.sql.Types; import java.time.LocalDateTime; import java.util.UUID;
-@Entity @Table(name="Orders") public class Order { @Id @JdbcTypeCode(Types.VARCHAR) @Column(name="Id", columnDefinition="char(36)") private UUID id; @JdbcTypeCode(Types.VARCHAR) @Column(name="UserId", columnDefinition="char(36)") private UUID userId; @Column(name="DeliveryAddress") private String deliveryAddress; @Column(name="TotalAmount") private BigDecimal totalAmount; @Column(name="Status") private int status; @Column(name="CreatedAt") private LocalDateTime createdAt; public UUID getId(){return id;} public UUID getUserId(){return userId;} public String getDeliveryAddress(){return deliveryAddress;} public BigDecimal getTotalAmount(){return totalAmount;} public int getStatus(){return status;} public LocalDateTime getCreatedAt(){return createdAt;} public void setStatus(int status){this.status=status;} }
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import java.math.BigDecimal;
+import java.sql.Types;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Entity
+@Table(name = "Orders")
+public class Order {
+    @Id
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "Id", columnDefinition = "char(36)")
+    private UUID id;
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "UserId", columnDefinition = "char(36)")
+    private UUID userId;
+    @Column(name = "DeliveryAddress")
+    private String deliveryAddress;
+    @Column(name = "TotalAmount")
+    private BigDecimal totalAmount;
+    @Column(name = "Status")
+    private int status;
+    @Column(name = "CreatedAt")
+    private LocalDateTime createdAt;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+}

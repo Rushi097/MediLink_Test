@@ -1,5 +1,20 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Store portal issue · MediLink</title><link rel="stylesheet" th:href="@{/css/store.css}"></head>
-<body class="login-page"><main class="login-card"><span class="eyebrow">MEDILINK · STORE PORTAL</span><h1>We could not open that page.</h1><p class="notice error" th:text="${message}">An unexpected error occurred.</p><a class="button" th:href="@{/dashboard}">Back to dashboard</a><p><a th:href="@{/login}">Sign in again</a> if the problem continues.</p></main></body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store portal issue · MediLink</title>
+    <link rel="stylesheet" th:href="@{/css/store.css}">
+</head>
+
+<body class="login-page">
+    <main class="login-card"><span class="eyebrow">MEDILINK · STORE PORTAL</span>
+        <h1>We could not open that page.</h1>
+        <p class="notice error" th:text="${message}">An unexpected error occurred.</p><a class="button"
+            th:href="@{/dashboard}">Back to dashboard</a>
+        <p><a th:href="@{/login}">Sign in again</a> if the problem continues.</p>
+    </main>
+</body>
+
 </html>

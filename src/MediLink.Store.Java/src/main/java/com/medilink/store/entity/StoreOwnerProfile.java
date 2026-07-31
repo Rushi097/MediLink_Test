@@ -1,3 +1,41 @@
 package com.medilink.store.entity;
-import jakarta.persistence.*; import org.hibernate.annotations.JdbcTypeCode; import java.sql.Types; import java.util.UUID;
-@Entity @Table(name="StoreOwnerProfiles") public class StoreOwnerProfile { @Id @JdbcTypeCode(Types.VARCHAR) @Column(name="Id", columnDefinition="char(36)") private UUID id; @JdbcTypeCode(Types.VARCHAR) @Column(name="UserId", columnDefinition="char(36)") private UUID userId; @Column(name="BusinessLicenseNumber") private String businessLicenseNumber; public StoreOwnerProfile(){} public StoreOwnerProfile(UUID userId,String businessLicenseNumber){this.id=UUID.randomUUID();this.userId=userId;this.businessLicenseNumber=businessLicenseNumber;} public UUID getId(){return id;} public UUID getUserId(){return userId;} public String getBusinessLicenseNumber(){return businessLicenseNumber;} }
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import java.sql.Types;
+import java.util.UUID;
+
+@Entity
+@Table(name = "StoreOwnerProfiles")
+public class StoreOwnerProfile {
+    @Id
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "Id", columnDefinition = "char(36)")
+    private UUID id;
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "UserId", columnDefinition = "char(36)")
+    private UUID userId;
+    @Column(name = "BusinessLicenseNumber")
+    private String businessLicenseNumber;
+
+    public StoreOwnerProfile() {
+    }
+
+    public StoreOwnerProfile(UUID userId, String businessLicenseNumber) {
+        this.id = UUID.randomUUID();
+        this.userId = userId;
+        this.businessLicenseNumber = businessLicenseNumber;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public String getBusinessLicenseNumber() {
+        return businessLicenseNumber;
+    }
+}

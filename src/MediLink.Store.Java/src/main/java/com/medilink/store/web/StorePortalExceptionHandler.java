@@ -20,7 +20,8 @@ public class StorePortalExceptionHandler {
     @ExceptionHandler(DataAccessException.class)
     String handleDatabaseException(DataAccessException exception, Model model) {
         log.error("Store portal database operation failed", exception);
-        model.addAttribute("message", "The store portal could not read its database. Check that MySQL is running and restart the portal.");
+        model.addAttribute("message",
+                "The store portal could not read its database. Check that MySQL is running and restart the portal.");
         return "error";
     }
 }

@@ -11,7 +11,8 @@ import java.util.UUID;
 /**
  * Reads the existing EF Core-owned account tables using their MySQL char(36)
  * UUID representation. This avoids Hibernate binding UUID parameters as binary
- * values, which prevented valid store-owner accounts from reaching the dashboard.
+ * values, which prevented valid store-owner accounts from reaching the
+ * dashboard.
  */
 @Service
 public class StoreLookupService {
@@ -35,7 +36,8 @@ public class StoreLookupService {
                 (rows, rowNumber) -> rows.getString("Id"),
                 userIds.getFirst());
         if (profileIds.isEmpty()) {
-            throw new StorePortalException("This account does not have a medical-store owner profile. Create a store account before signing in.");
+            throw new StorePortalException(
+                    "This account does not have a medical-store owner profile. Create a store account before signing in.");
         }
 
         List<Store> stores = jdbc.query(
@@ -47,7 +49,8 @@ public class StoreLookupService {
                         UUID.fromString(rows.getString("StoreOwnerProfileId"))),
                 profileIds.getFirst());
         if (stores.isEmpty()) {
-            throw new StorePortalException("This store-owner account has no store profile yet. Please register the store again with a new email address.");
+            throw new StorePortalException(
+                    "This store-owner account has no store profile yet. Please register the store again with a new email address.");
         }
         return stores.getFirst();
     }
