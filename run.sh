@@ -3,17 +3,43 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-RUNTIME_DIR="$ROOT_DIR/.medilink-run"
+if [ -n "${WSL_DISTRO_NAME:-}" ]; then
+  RUNTIME_DIR="${MEDILINK_RUNTIME_DIR:-$HOME/.local/state/medilink}"
+else
+  RUNTIME_DIR="${MEDILINK_RUNTIME_DIR:-$ROOT_DIR/.medilink-run}"
+fi
 COMMAND="${1:-start}"
 
-for command in dotnet node npm mvn; do
-  command -v "$command" >/dev/null 2>&1 || { echo "Missing required command: $command"; exit 1; }
-done
+require_commands() {
+  for command in dotnet node npm mvn mysql; do
+    command -v "$command" >/dev/null 2>&1 || {
+      echo "Missing required command: $command"
+      echo "Install the Ubuntu prerequisites listed in ALL_LINKS_AND_PROJECT_GUIDE.md, then retry."
+      exit 1
+    }
+  done
+}
 
 require_environment() {
+  : "${MEDILINK_DB_USERNAME:=root}"
   : "${MEDILINK_DB_PASSWORD:?Set MEDILINK_DB_PASSWORD before running this script.}"
   : "${MEDILINK_JWT_SECRET:?Set MEDILINK_JWT_SECRET to a value with at least 32 characters.}"
-  [ "${#MEDILINK_JWT_SECRET}" -ge 32 ] || { echo "Hyperlocal online medicine ordering platform"; exit 1; }
+  [ "${#MEDILINK_JWT_SECRET}" -ge 32 ] || {
+    echo "MEDILINK_JWT_SECRET must contain at least 32 characters."
+    exit 1
+  }
+}
+
+verify_database_connection() {
+  local host="${MEDILINK_DB_HOST:-localhost}"
+  local port="${MEDILINK_DB_PORT:-3306}"
+  local database="${MEDILINK_DB_NAME:-MediLink}"
+
+  if ! MYSQL_PWD="$MEDILINK_DB_PASSWORD" mysql --protocol=TCP --host="$host" --port="$port" --user="$MEDILINK_DB_USERNAME" --execute "CREATE DATABASE IF NOT EXISTS \`$database\`;"; then
+    echo "Unable to connect to MySQL as '$MEDILINK_DB_USERNAME' at $host:$port."
+    echo "Check MEDILINK_DB_USERNAME and MEDILINK_DB_PASSWORD, then retry."
+    exit 1
+  fi
 }
 
 stop_service() {
@@ -33,11 +59,16 @@ start_service() {
 
 case "$COMMAND" in
   start)
-    require_environment; mkdir -p "$RUNTIME_DIR"
-    export MEDILINK_DB_URL="${MEDILINK_DB_URL:-jdbc:mysql://localhost:3306/MediLink?useSSL=false&serverTimezone=UTC}"
-    export MEDILINK_DB_USERNAME="${MEDILINK_DB_USERNAME:-root}"
-    export ConnectionStrings__DefaultConnection="Server=localhost;Port=3306;Database=MediLink;User ID=$MEDILINK_DB_USERNAME;Password=$MEDILINK_DB_PASSWORD;"
+    require_commands
+    require_environment
+    mkdir -p "$RUNTIME_DIR"
+    export MEDILINK_DB_HOST="${MEDILINK_DB_HOST:-localhost}"
+    export MEDILINK_DB_PORT="${MEDILINK_DB_PORT:-3306}"
+    export MEDILINK_DB_NAME="${MEDILINK_DB_NAME:-MediLink}"
+    export MEDILINK_DB_URL="${MEDILINK_DB_URL:-jdbc:mysql://$MEDILINK_DB_HOST:$MEDILINK_DB_PORT/$MEDILINK_DB_NAME?useSSL=false&serverTimezone=UTC}"
+    export ConnectionStrings__DefaultConnection="Server=$MEDILINK_DB_HOST;Port=$MEDILINK_DB_PORT;Database=$MEDILINK_DB_NAME;User ID=$MEDILINK_DB_USERNAME;Password=$MEDILINK_DB_PASSWORD;"
     export JwtSettings__Secret="$MEDILINK_JWT_SECRET"
+    verify_database_connection
     start_service api "$ROOT_DIR" dotnet run --project src/MediLink.Api
     start_service web "$ROOT_DIR/src/MediLink.Web" npm run dev -- --host 127.0.0.1
     start_service store-portal "$ROOT_DIR/src/MediLink.Store.Java" mvn spring-boot:run

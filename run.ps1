@@ -59,8 +59,11 @@ switch ($Command) {
 
         New-Item -ItemType Directory -Path $RuntimeDirectory -Force | Out-Null
         $dbUser = if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_USERNAME)) { 'root' } else { $env:MEDILINK_DB_USERNAME }
-        $javaDbUrl = if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_URL)) { 'jdbc:mysql://localhost:3306/MediLink?useSSL=false&serverTimezone=UTC' } else { $env:MEDILINK_DB_URL }
-        $connectionString = "Server=localhost;Port=3306;Database=MediLink;User ID=$dbUser;Password=$($env:MEDILINK_DB_PASSWORD);"
+        $dbHost = if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_HOST)) { 'localhost' } else { $env:MEDILINK_DB_HOST }
+        $dbPort = if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_PORT)) { '3306' } else { $env:MEDILINK_DB_PORT }
+        $dbName = if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_NAME)) { 'MediLink' } else { $env:MEDILINK_DB_NAME }
+        $javaDbUrl = if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_URL)) { "jdbc:mysql://${dbHost}:${dbPort}/${dbName}?useSSL=false&serverTimezone=UTC" } else { $env:MEDILINK_DB_URL }
+        $connectionString = "Server=$dbHost;Port=$dbPort;Database=$dbName;User ID=$dbUser;Password=$($env:MEDILINK_DB_PASSWORD);"
 
         Start-MediLinkService 'api' "`$env:ConnectionStrings__DefaultConnection = '$connectionString'; `$env:JwtSettings__Secret = '$($env:MEDILINK_JWT_SECRET)'; Set-Location '$Root'; dotnet run --project src\MediLink.Api *>> '$(Join-Path $RuntimeDirectory 'api.log')'"
         Start-MediLinkService 'web' "Set-Location '$(Join-Path $Root 'src\MediLink.Web')'; npm.cmd run dev -- --host 127.0.0.1 *>> '$(Join-Path $RuntimeDirectory 'web.log')'"

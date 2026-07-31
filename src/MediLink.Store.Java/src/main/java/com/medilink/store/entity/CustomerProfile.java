@@ -1,3 +1,34 @@
 package com.medilink.store.entity;
-import jakarta.persistence.*; import org.hibernate.annotations.JdbcTypeCode; import java.sql.Types; import java.util.UUID;
-@Entity @Table(name="CustomerProfiles") public class CustomerProfile { @Id @JdbcTypeCode(Types.VARCHAR) @Column(name="Id", columnDefinition="char(36)") private UUID id; @JdbcTypeCode(Types.VARCHAR) @Column(name="UserId", columnDefinition="char(36)") private UUID userId; @Column(name="DeliveryAddress") private String deliveryAddress; @Column(name="PhoneNumber") private String phoneNumber; public UUID getUserId(){return userId;} public String getDeliveryAddress(){return deliveryAddress;} public String getPhoneNumber(){return phoneNumber;} }
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import java.sql.Types;
+import java.util.UUID;
+
+@Entity
+@Table(name = "CustomerProfiles")
+public class CustomerProfile {
+    @Id
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "Id", columnDefinition = "char(36)")
+    private UUID id;
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "UserId", columnDefinition = "char(36)")
+    private UUID userId;
+    @Column(name = "DeliveryAddress")
+    private String deliveryAddress;
+    @Column(name = "PhoneNumber")
+    private String phoneNumber;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+}

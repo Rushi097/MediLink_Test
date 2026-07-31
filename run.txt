@@ -5,8 +5,11 @@ Read [ALL_LINKS_AND_PROJECT_GUIDE.md](ALL_LINKS_AND_PROJECT_GUIDE.md) for the co
 For Windows PowerShell or Command Prompt, start all three applications with:
 
 ```powershell
-$env:MEDILINK_DB_PASSWORD = 'root'
-$env:MEDILINK_JWT_SECRET = 'medilink-development-secret-must-be-32-characters'
+$env:MEDILINK_DB_USERNAME = 'root'
+$env:MEDILINK_DB_PASSWORD = 'your-mysql-password'
+$env:MEDILINK_DB_HOST = 'localhost'
+$env:MEDILINK_DB_PORT = '3306'
+$env:MEDILINK_JWT_SECRET = 'use-a-long-random-development-secret-of-at-least-32-characters'
 .\run.cmd start
 ```
 
@@ -17,7 +20,10 @@ Do not use `export` or `bash run.sh` in PowerShell.
 For Git Bash, WSL, Linux, or macOS, start all three applications with:
 
 ```bash
+export MEDILINK_DB_USERNAME='root'
 export MEDILINK_DB_PASSWORD='your-mysql-password'
+export MEDILINK_DB_HOST='localhost'
+export MEDILINK_DB_PORT='3306'
 export MEDILINK_JWT_SECRET='use-a-long-random-development-secret-of-at-least-32-characters'
-./run.sh start
+bash run.sh start
 ```
