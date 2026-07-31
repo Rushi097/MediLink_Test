@@ -4,7 +4,7 @@ spring:
   datasource:
     url: ${MEDILINK_DB_URL:jdbc:mysql://localhost:3306/MediLink?useSSL=false&serverTimezone=UTC}
     username: ${MEDILINK_DB_USERNAME:root}
-    password: ${MEDILINK_DB_PASSWORD:}
+    password: ${MEDILINK_DB_PASSWORD:root}
   jpa:
     hibernate:
       # The ASP.NET Core application owns its existing tables. Do not let Hibernate alter them.
