@@ -11,6 +11,7 @@ public class MediLinkDbContext : DbContext
     public DbSet<CustomerProfile> CustomerProfiles => Set<CustomerProfile>();
     public DbSet<StoreOwnerProfile> StoreOwnerProfiles => Set<StoreOwnerProfile>();
     public DbSet<Store> Stores => Set<Store>();
+    public DbSet<StoreInventory> StoreInventories => Set<StoreInventory>();
     public DbSet<Medicine> Medicines => Set<Medicine>();
     public DbSet<Cart> Carts => Set<Cart>();
     public DbSet<CartItem> CartItems => Set<CartItem>();
@@ -52,6 +53,19 @@ public class MediLinkDbContext : DbContext
             .HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<OrderItem>().HasOne(i => i.Order).WithMany(o => o.Items)
             .HasForeignKey(i => i.OrderId).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<StoreInventory>()
+            .HasOne(si => si.Store)
+            .WithMany()
+            .HasForeignKey(si => si.StoreId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<StoreInventory>()
+            .HasOne(si => si.Medicine)
+            .WithMany()
+            .HasForeignKey(si => si.MedicineId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<StoreInventory>()
+            .HasIndex(si => new { si.StoreId, si.MedicineId })
+            .IsUnique();
         modelBuilder.Entity<Medicine>().Property(m => m.Price).HasPrecision(10, 2);
         modelBuilder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(10, 2);
         modelBuilder.Entity<OrderItem>().Property(i => i.UnitPrice).HasPrecision(10, 2);

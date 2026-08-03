@@ -2,15 +2,15 @@
 
 ## Local links
 
-| Area | Link | Purpose |
-| --- | --- | --- |
-| Customer website | [http://localhost:5173](http://localhost:5173) | Medicine search, customer registration, cart, checkout, and orders. |
-| Customer registration | [http://localhost:5173/register](http://localhost:5173/register) | Create a customer account. |
-| Store registration | [http://localhost:8081/register](http://localhost:8081/register) | Create a store-owner account, owner profile, and store. |
-| Store login | [http://localhost:8081/login](http://localhost:8081/login) | Store-owner inventory and order portal. |
-| Store dashboard | [http://localhost:8081/dashboard](http://localhost:8081/dashboard) | Inventory and low-stock overview. |
-| API / Swagger | [http://localhost:5140/swagger](http://localhost:5140/swagger) | API documentation and development testing. |
-| API health | [http://localhost:5140/health](http://localhost:5140/health) | API-to-MySQL health check. |
+| Area                  | Link                                                               | Purpose                                                             |
+| --------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| Customer website      | [http://localhost:5173](http://localhost:5173)                     | Medicine search, customer registration, cart, checkout, and orders. |
+| Customer registration | [http://localhost:5173/register](http://localhost:5173/register)   | Create a customer account.                                          |
+| Store registration    | [http://localhost:8081/register](http://localhost:8081/register)   | Create a store-owner account, owner profile, and store.             |
+| Store login           | [http://localhost:8081/login](http://localhost:8081/login)         | Store-owner inventory and order portal.                             |
+| Store dashboard       | [http://localhost:8081/dashboard](http://localhost:8081/dashboard) | Inventory and low-stock overview.                                   |
+| API / Swagger         | [http://localhost:5140/swagger](http://localhost:5140/swagger)     | API documentation and development testing.                          |
+| API health            | [http://localhost:5140/health](http://localhost:5140/health)       | API-to-MySQL health check.                                          |
 
 ## Project working
 

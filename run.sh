@@ -22,8 +22,8 @@ require_commands() {
 
 require_environment() {
   : "${MEDILINK_DB_USERNAME:=root}"
-  : "${MEDILINK_DB_PASSWORD:?Set MEDILINK_DB_PASSWORD before running this script.}"
-  : "${MEDILINK_JWT_SECRET:?Set MEDILINK_JWT_SECRET to a value with at least 32 characters.}"
+  : "${MEDILINK_DB_PASSWORD:=root}"
+  : "${MEDILINK_JWT_SECRET:=medilink-development-secret-must-be-32-characters}"
   [ "${#MEDILINK_JWT_SECRET}" -ge 32 ] || {
     echo "MEDILINK_JWT_SECRET must contain at least 32 characters."
     exit 1
@@ -72,7 +72,7 @@ case "$COMMAND" in
     start_service api "$ROOT_DIR" dotnet run --project src/MediLink.Api
     start_service web "$ROOT_DIR/src/MediLink.Web" npm run dev -- --host 127.0.0.1
     start_service store-portal "$ROOT_DIR/src/MediLink.Store.Java" mvn spring-boot:run
-    printf '\nCustomer web:  http://localhost:5173\nAPI / Swagger: http://localhost:5140/swagger\nAPI health:    http://localhost:5140/health\nStore portal:  http://localhost:8081/login\n\n'
+    printf '\nCustomer web:   http://localhost:5173\nCustomer login: http://localhost:5173/login\nAdmin login:    http://localhost:5173/admin-login\nAPI / Swagger:  http://localhost:5140/swagger\nAPI health:     http://localhost:5140/health\nStore portal:   http://localhost:8081/login\n\n'
     ;;
   stop) stop_service api; stop_service web; stop_service store-portal ;;
   status)

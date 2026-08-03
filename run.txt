@@ -5,13 +5,31 @@ Read [ALL_LINKS_AND_PROJECT_GUIDE.md](ALL_LINKS_AND_PROJECT_GUIDE.md) for the co
 For Windows PowerShell or Command Prompt, start all three applications with:
 
 ```powershell
-$env:MEDILINK_DB_USERNAME = 'root'
-$env:MEDILINK_DB_PASSWORD = 'your-mysql-password'
-$env:MEDILINK_DB_HOST = 'localhost'
-$env:MEDILINK_DB_PORT = '3306'
-$env:MEDILINK_JWT_SECRET = 'use-a-long-random-development-secret-of-at-least-32-characters'
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+$env:MEDILINK_DB_USERNAME = "root"
+$env:MEDILINK_DB_PASSWORD = "root"
+$env:MEDILINK_JWT_SECRET = "a-random-string-at-least-32-characters-long"
+
 .\run.cmd start
+
 ```
+
+
+You can also start it directly with:
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\run.ps1 start
+
+Then later:
+.\run.ps1 status
+.\run.ps1 stop
+
+
+
+
+
+
+
 
 `run.cmd` starts the PowerShell launcher with the required per-process
 execution-policy bypass. This avoids the "running scripts is disabled" error.
@@ -21,9 +39,118 @@ For Git Bash, WSL, Linux, or macOS, start all three applications with:
 
 ```bash
 export MEDILINK_DB_USERNAME='root'
-export MEDILINK_DB_PASSWORD='your-mysql-password'
+export MEDILINK_DB_PASSWORD='root'
 export MEDILINK_DB_HOST='localhost'
 export MEDILINK_DB_PORT='3306'
 export MEDILINK_JWT_SECRET='use-a-long-random-development-secret-of-at-least-32-characters'
 bash run.sh start
 ```
+
+
+================================
+.\run.ps1 start
+
+run.cmd
+
+
+============================
+ubuntu
+bash run.sh start
+
+
+./run.sh start
+bash run.sh start
+./run.sh status
+./run.sh stop
+==============================================================
+
+## Command Prompt commands for Windows
+
+Use these in normal Command Prompt, not Bash.
+
+### 1) Go to the project folder
+```cmd
+cd /d D:\cdac\Project\from-ubuntu-for-zip\9\MediLink
+```
+
+### 2) Set environment variables
+```cmd
+set MEDILINK_DB_USERNAME=root
+set MEDILINK_DB_PASSWORD=root
+set MEDILINK_JWT_SECRET=medilink-development-secret-must-be-32-characters
+```
+
+> For Windows CMD, use `set`, not `export`.
+
+### 3) Create the database in MySQL
+If MySQL is installed and running:
+
+```cmd
+mysql -u root -p
+```
+
+Then inside MySQL:
+
+```sql
+CREATE DATABASE IF NOT EXISTS MediLink;
+EXIT;
+```
+
+### 4) Install frontend dependencies once
+```cmd
+cd src\MediLink.Web
+npm install
+cd ..\..
+```
+
+### 5) Start the project
+```cmd
+run.cmd
+```
+==============================================================
+============================================
+or if you want to run the script explicitly:
+
+```cmd
+powershell -ExecutionPolicy Bypass -File .\run.ps1
+```
+
+---
+
+## If you are using PowerShell instead of CMD
+
+```powershell
+cd "D:\cdac\Project\from-ubuntu-for-zip\9\MediLink"
+$env:MEDILINK_DB_USERNAME = "root"
+$env:MEDILINK_DB_PASSWORD = "root"
+$env:MEDILINK_JWT_SECRET = "medilink-development-secret-must-be-32-characters"
+.\run.ps1 start
+```
+
+---
+
+## Important note
+The project guide says the app auto-creates the default admin when the API starts:
+
+- email: `admin@medilink.local`
+- password: `Admin@123`
+
+So after startup, you can log in with that user from the web app.
+
+---
+
+## If you want to check status
+```cmd
+run.cmd status
+```
+
+or
+
+```powershell
+.\run.ps1 status
+```
+
+If you want, I can give you the exact full Windows CMD sequence from start to login in one copy-paste block.
+
+
+======================================================================================

@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/MediLink.Api/MediLink.Api.csproj" />
-    <Project Path="src/MediLink.Cli/MediLink.Cli.csproj" />
     <Project Path="src/MediLink.Core/MediLink.Core.csproj" />
     <Project Path="src/MediLink.Infrastructure/MediLink.Infrastructure.csproj" />
   </Folder>

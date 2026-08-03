@@ -11,6 +11,16 @@ $ErrorActionPreference = 'Stop'
 $Root = $PSScriptRoot
 $RuntimeDirectory = Join-Path $Root '.medilink-run'
 
+if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_USERNAME)) {
+    $env:MEDILINK_DB_USERNAME = 'root'
+}
+if ([string]::IsNullOrWhiteSpace($env:MEDILINK_DB_PASSWORD)) {
+    $env:MEDILINK_DB_PASSWORD = 'root'
+}
+if ([string]::IsNullOrWhiteSpace($env:MEDILINK_JWT_SECRET)) {
+    $env:MEDILINK_JWT_SECRET = 'medilink-development-secret-must-be-32-characters'
+}
+
 function Get-PidFile([string]$Name) {
     Join-Path $RuntimeDirectory "$Name.pid"
 }
@@ -70,10 +80,12 @@ switch ($Command) {
         Start-MediLinkService 'store-portal' "`$env:MEDILINK_DB_URL = '$javaDbUrl'; `$env:MEDILINK_DB_USERNAME = '$dbUser'; `$env:MEDILINK_DB_PASSWORD = '$($env:MEDILINK_DB_PASSWORD)'; Set-Location '$(Join-Path $Root 'src\MediLink.Store.Java')'; mvn.cmd spring-boot:run *>> '$(Join-Path $RuntimeDirectory 'store-portal.log')'"
 
         Write-Host "`nMediLink is starting:"
-        Write-Host '  Customer web:  http://localhost:5173'
-        Write-Host '  API / Swagger: http://localhost:5140/swagger'
-        Write-Host '  API health:    http://localhost:5140/health'
-        Write-Host '  Store portal:  http://localhost:8081/login'
+        Write-Host '  Customer web:        http://localhost:5173'
+        Write-Host '  Customer login:      http://localhost:5173/login'
+        Write-Host '  Admin login:         http://localhost:5173/admin-login'
+        Write-Host '  API / Swagger:       http://localhost:5140/swagger'
+        Write-Host '  API health:          http://localhost:5140/health'
+        Write-Host '  Store portal:        http://localhost:8081/login'
     }
     'stop' { 'api', 'web', 'store-portal' | ForEach-Object { Stop-MediLinkService $_ } }
     'status' {
