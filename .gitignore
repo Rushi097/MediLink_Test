@@ -483,3 +483,4 @@ $RECYCLE.BIN/
 
 # Local processes and logs created by run.sh
 .medilink-run/
+/.metadata/
