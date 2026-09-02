@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: medilink-store-portal
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      static-locations: classpath:/static/,file:uploads/
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+server:
+  port: 8081
+medilink:
+  auth-url: ${MEDILINK_AUTH_URL:http://localhost:5101}
+  inventory-url: ${MEDILINK_INVENTORY_URL:http://localhost:5201}
+  order-url: ${MEDILINK_ORDER_URL:http://localhost:5301}
+  internal-key: ${MEDILINK_INTERNAL_KEY:medilink-internal-development-key}
+  upload-dir: ${MEDILINK_UPLOADS_DIR:${user.dir}/uploads}
+  public-upload-base-url: ${MEDILINK_PUBLIC_UPLOAD_BASE_URL:http://localhost:8081}

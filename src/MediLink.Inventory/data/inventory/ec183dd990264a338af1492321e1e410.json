@@ -1,0 +1,10 @@
+[
+  {
+    "id": "b3d054b6-d02f-4cf8-9eb4-e27baec9ae6b",
+    "storeId": "ec183dd9-9026-4a33-8af1-492321e1e410",
+    "medicineId": "60615931-11af-5150-9eb7-4d60d8b223a6",
+    "externalMedicineId": "ML-54",
+    "price": 20,
+    "stockQuantity": 8
+  }
+]

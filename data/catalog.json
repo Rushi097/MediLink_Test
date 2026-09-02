@@ -1,0 +1,572 @@
+[
+  {
+    "id": "ML-1",
+    "name": "Paracetamol 500 mg",
+    "category": "Fever & Pain",
+    "description": "A commonly used analgesic and antipyretic medicine for relief of pain and fever.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-1.svg",
+    "isActive": true,
+    "internalId": "6d45f143-838e-5313-8066-5e1f3d248a6a"
+  },
+  {
+    "id": "ML-2",
+    "name": "Paracetamol 650 mg",
+    "category": "Fever & Pain",
+    "description": "A commonly used analgesic and antipyretic medicine for relief of pain and fever.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-2.svg",
+    "isActive": true,
+    "internalId": "67a77f92-ead8-5eee-8f58-8c0f407efae4"
+  },
+  {
+    "id": "ML-3",
+    "name": "Ibuprofen 200 mg",
+    "category": "Fever & Pain",
+    "description": "A nonsteroidal anti-inflammatory medicine used for pain, fever and inflammation.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-3.svg",
+    "isActive": true,
+    "internalId": "201bc859-ec46-5335-9827-135611c51752"
+  },
+  {
+    "id": "ML-4",
+    "name": "Ibuprofen 400 mg",
+    "category": "Fever & Pain",
+    "description": "A nonsteroidal anti-inflammatory medicine used for pain, fever and inflammation.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-4.svg",
+    "isActive": true,
+    "internalId": "e01a70f2-3a4e-5cac-9447-0865928e9195"
+  },
+  {
+    "id": "ML-5",
+    "name": "Aspirin 75 mg",
+    "category": "Cardiovascular",
+    "description": "Low-dose aspirin is used in specific cardiovascular settings under medical advice.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-5.svg",
+    "isActive": true,
+    "internalId": "1af4ef24-53b7-5d28-aa9b-e8f811e9c382"
+  },
+  {
+    "id": "ML-6",
+    "name": "Cetirizine 10 mg",
+    "category": "Allergy Care",
+    "description": "An antihistamine used to relieve symptoms of allergic conditions such as sneezing and itching.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-6.svg",
+    "isActive": true,
+    "internalId": "fce79578-3552-51fd-9abb-a88c5ce4ce9d"
+  },
+  {
+    "id": "ML-7",
+    "name": "Levocetirizine 5 mg",
+    "category": "Allergy Care",
+    "description": "An antihistamine used to relieve symptoms associated with allergic conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-7.svg",
+    "isActive": true,
+    "internalId": "93e7078d-2fe0-599a-9704-87c07b701e47"
+  },
+  {
+    "id": "ML-8",
+    "name": "Loratadine 10 mg",
+    "category": "Allergy Care",
+    "description": "A non-sedating antihistamine used for relief of common allergy symptoms.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-8.svg",
+    "isActive": true,
+    "internalId": "a94758d8-1406-553f-8dab-d1dfddfeab6d"
+  },
+  {
+    "id": "ML-9",
+    "name": "Fexofenadine 120 mg",
+    "category": "Allergy Care",
+    "description": "An antihistamine used to relieve symptoms of allergic rhinitis and related conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-9.svg",
+    "isActive": true,
+    "internalId": "2103aa46-e6cd-5b9a-97b4-d7ea606cd881"
+  },
+  {
+    "id": "ML-10",
+    "name": "Amoxicillin 500 mg",
+    "category": "Antibiotics",
+    "description": "A penicillin-class antibiotic used for certain bacterial infections when prescribed.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-10.svg",
+    "isActive": true,
+    "internalId": "08d22967-b479-5bb6-a35f-f2a4a5ae9979"
+  },
+  {
+    "id": "ML-11",
+    "name": "Amoxicillin + Clavulanate",
+    "category": "Antibiotics",
+    "description": "A combination antibiotic used for certain bacterial infections when prescribed.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-11.svg",
+    "isActive": true,
+    "internalId": "334f3506-ea80-5dab-a8a4-81654187c139"
+  },
+  {
+    "id": "ML-12",
+    "name": "Azithromycin 500 mg",
+    "category": "Antibiotics",
+    "description": "A macrolide antibiotic used for selected bacterial infections when prescribed.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-12.svg",
+    "isActive": true,
+    "internalId": "56cffff5-c8e9-5f87-97c2-d7570aa598f8"
+  },
+  {
+    "id": "ML-13",
+    "name": "Doxycycline 100 mg",
+    "category": "Antibiotics",
+    "description": "A tetracycline-class antibiotic used for selected bacterial infections and other indications.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-13.svg",
+    "isActive": true,
+    "internalId": "2a2ef16c-47e8-5c1e-ba73-d1510730d1e4"
+  },
+  {
+    "id": "ML-14",
+    "name": "Cefixime 200 mg",
+    "category": "Antibiotics",
+    "description": "A cephalosporin antibiotic used for selected bacterial infections when prescribed.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-14.svg",
+    "isActive": true,
+    "internalId": "4509e03a-3030-5d2f-99ac-32bd650c7fe9"
+  },
+  {
+    "id": "ML-15",
+    "name": "Cefuroxime 500 mg",
+    "category": "Antibiotics",
+    "description": "A cephalosporin antibiotic used for selected bacterial infections when prescribed.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-15.svg",
+    "isActive": true,
+    "internalId": "434a1cc0-d21f-594b-91f0-fb2879b03b97"
+  },
+  {
+    "id": "ML-16",
+    "name": "Metformin 500 mg",
+    "category": "Diabetes Care",
+    "description": "An oral medicine commonly used to help control blood glucose in type 2 diabetes.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-16.svg",
+    "isActive": true,
+    "internalId": "ad70f1f5-f9f6-599f-9c33-311b77e0bcb8"
+  },
+  {
+    "id": "ML-17",
+    "name": "Metformin 1000 mg",
+    "category": "Diabetes Care",
+    "description": "An oral medicine commonly used to help control blood glucose in type 2 diabetes.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-17.svg",
+    "isActive": true,
+    "internalId": "ee76d101-3678-530e-bee4-29bcdfde737c"
+  },
+  {
+    "id": "ML-18",
+    "name": "Glimepiride 1 mg",
+    "category": "Diabetes Care",
+    "description": "An oral sulfonylurea medicine used to help control blood glucose in type 2 diabetes.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-18.svg",
+    "isActive": true,
+    "internalId": "467a1181-e81b-57b8-8528-76076d2eef0c"
+  },
+  {
+    "id": "ML-19",
+    "name": "Glimepiride 2 mg",
+    "category": "Diabetes Care",
+    "description": "An oral sulfonylurea medicine used to help control blood glucose in type 2 diabetes.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-19.svg",
+    "isActive": true,
+    "internalId": "2d311093-69d0-506c-acee-402997d9d2b0"
+  },
+  {
+    "id": "ML-20",
+    "name": "Amlodipine 5 mg",
+    "category": "Blood Pressure",
+    "description": "A calcium-channel blocker commonly used to treat high blood pressure and certain heart conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-20.svg",
+    "isActive": true,
+    "internalId": "34f5cd57-e4f5-52fd-8035-615860a5e0f4"
+  },
+  {
+    "id": "ML-21",
+    "name": "Amlodipine 10 mg",
+    "category": "Blood Pressure",
+    "description": "A calcium-channel blocker commonly used to treat high blood pressure and certain heart conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-21.svg",
+    "isActive": true,
+    "internalId": "2872fef0-b1e1-5b22-bc5d-064c98229246"
+  },
+  {
+    "id": "ML-22",
+    "name": "Losartan 50 mg",
+    "category": "Blood Pressure",
+    "description": "An angiotensin receptor blocker commonly used for high blood pressure and related cardiovascular conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-22.svg",
+    "isActive": true,
+    "internalId": "95f59c5b-edd0-59b7-9bd5-3e6ab06746a8"
+  },
+  {
+    "id": "ML-23",
+    "name": "Telmisartan 40 mg",
+    "category": "Blood Pressure",
+    "description": "An angiotensin receptor blocker commonly used for high blood pressure and selected cardiovascular indications.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-23.svg",
+    "isActive": true,
+    "internalId": "17e0c79f-f8c7-5a28-b3b8-55e5ca325a61"
+  },
+  {
+    "id": "ML-24",
+    "name": "Atorvastatin 10 mg",
+    "category": "Cholesterol",
+    "description": "A statin medicine used to lower LDL cholesterol and reduce cardiovascular risk.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-24.svg",
+    "isActive": true,
+    "internalId": "c903a332-eaff-571b-97b6-787b55231759"
+  },
+  {
+    "id": "ML-25",
+    "name": "Atorvastatin 20 mg",
+    "category": "Cholesterol",
+    "description": "A statin medicine used to lower LDL cholesterol and reduce cardiovascular risk.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-25.svg",
+    "isActive": true,
+    "internalId": "bdd4b585-59ce-59ec-b05e-906676cbee18"
+  },
+  {
+    "id": "ML-26",
+    "name": "Rosuvastatin 10 mg",
+    "category": "Cholesterol",
+    "description": "A statin medicine used to lower cholesterol and reduce cardiovascular risk.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-26.svg",
+    "isActive": true,
+    "internalId": "d02b8577-daab-5ab1-90de-7be4f8a6fb9d"
+  },
+  {
+    "id": "ML-27",
+    "name": "Omeprazole 20 mg",
+    "category": "Digestive Care",
+    "description": "A proton-pump inhibitor that reduces stomach acid and is used for several acid-related conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-27.svg",
+    "isActive": true,
+    "internalId": "1b4abc9e-11fd-5a6e-a254-360b4e464fdb"
+  },
+  {
+    "id": "ML-28",
+    "name": "Pantoprazole 40 mg",
+    "category": "Digestive Care",
+    "description": "A proton-pump inhibitor that reduces stomach acid and is used for several acid-related conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-28.svg",
+    "isActive": true,
+    "internalId": "9939bf50-3d9d-5fcd-b7ac-16a0bd7d6b89"
+  },
+  {
+    "id": "ML-29",
+    "name": "Esomeprazole 40 mg",
+    "category": "Digestive Care",
+    "description": "A proton-pump inhibitor that reduces stomach acid and is used for several acid-related conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-29.svg",
+    "isActive": true,
+    "internalId": "4541d56b-cc7f-5b71-919f-89dea7892923"
+  },
+  {
+    "id": "ML-30",
+    "name": "Famotidine 20 mg",
+    "category": "Digestive Care",
+    "description": "An H2-receptor blocker that reduces stomach acid and is used for acid-related conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-30.svg",
+    "isActive": true,
+    "internalId": "ea4c5f7b-9f94-598a-a7b4-d73295b14199"
+  },
+  {
+    "id": "ML-31",
+    "name": "Ondansetron 4 mg",
+    "category": "Digestive Care",
+    "description": "A medicine used to help prevent and treat nausea and vomiting in specified clinical settings.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-31.svg",
+    "isActive": true,
+    "internalId": "92ac4dff-7769-522e-9bbf-714b362c23e3"
+  },
+  {
+    "id": "ML-32",
+    "name": "Domperidone 10 mg",
+    "category": "Digestive Care",
+    "description": "A medicine used in selected settings for nausea and vomiting; use should follow local medical guidance.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-32.svg",
+    "isActive": true,
+    "internalId": "092f70cd-0eb7-54b7-a7cf-52748d66d079"
+  },
+  {
+    "id": "ML-33",
+    "name": "Diclofenac 50 mg",
+    "category": "Fever & Pain",
+    "description": "A nonsteroidal anti-inflammatory medicine used for pain and inflammation.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-33.svg",
+    "isActive": true,
+    "internalId": "b08d359a-dc3d-596c-a4e6-aab478238cf6"
+  },
+  {
+    "id": "ML-34",
+    "name": "Naproxen 250 mg",
+    "category": "Fever & Pain",
+    "description": "A nonsteroidal anti-inflammatory medicine used for pain and inflammation.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-34.svg",
+    "isActive": true,
+    "internalId": "de52b6a1-10d2-567b-b409-2a0fe46438db"
+  },
+  {
+    "id": "ML-35",
+    "name": "Montelukast 10 mg",
+    "category": "Respiratory",
+    "description": "A leukotriene receptor antagonist used for selected asthma and allergy indications.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-35.svg",
+    "isActive": true,
+    "internalId": "03e13e95-b0ae-521e-8acf-db1aa1bf6f70"
+  },
+  {
+    "id": "ML-36",
+    "name": "Salbutamol 4 mg",
+    "category": "Respiratory",
+    "description": "A bronchodilator used to relieve bronchospasm in conditions such as asthma.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-36.svg",
+    "isActive": true,
+    "internalId": "98f7b5f0-e9ce-5305-ac68-dc0a4571e5f4"
+  },
+  {
+    "id": "ML-37",
+    "name": "Budesonide 200 mcg",
+    "category": "Respiratory",
+    "description": "A corticosteroid used in inhaled formulations for control of airway inflammation.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-37.svg",
+    "isActive": true,
+    "internalId": "a4cd0141-35e3-51ed-854d-76df8c422c3b"
+  },
+  {
+    "id": "ML-38",
+    "name": "Levothyroxine 50 mcg",
+    "category": "Thyroid",
+    "description": "A thyroid hormone replacement medicine used to treat hypothyroidism.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-38.svg",
+    "isActive": true,
+    "internalId": "0cfce9a9-6656-59a9-8de9-ab7a272d6a95"
+  },
+  {
+    "id": "ML-39",
+    "name": "Levothyroxine 100 mcg",
+    "category": "Thyroid",
+    "description": "A thyroid hormone replacement medicine used to treat hypothyroidism.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-39.svg",
+    "isActive": true,
+    "internalId": "9a986092-a2e9-53e0-9640-02629e481359"
+  },
+  {
+    "id": "ML-40",
+    "name": "Albendazole 400 mg",
+    "category": "Antiparasitic",
+    "description": "An anthelmintic medicine used to treat certain parasitic worm infections.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-40.svg",
+    "isActive": true,
+    "internalId": "16793953-fc29-5b14-b82b-8fdc7896e488"
+  },
+  {
+    "id": "ML-41",
+    "name": "Mebendazole 100 mg",
+    "category": "Antiparasitic",
+    "description": "An anthelmintic medicine used to treat certain intestinal worm infections.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-41.svg",
+    "isActive": true,
+    "internalId": "7df32492-993e-52f4-b549-f751dc30daf2"
+  },
+  {
+    "id": "ML-42",
+    "name": "Loperamide 2 mg",
+    "category": "Digestive Care",
+    "description": "An antidiarrheal medicine that reduces intestinal motility and is used for short-term symptom control.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-42.svg",
+    "isActive": true,
+    "internalId": "90c2599f-ddaa-5034-8592-83d278566dfb"
+  },
+  {
+    "id": "ML-43",
+    "name": "Lactulose",
+    "category": "Digestive Care",
+    "description": "An osmotic laxative used to treat constipation and for specific clinical indications.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-43.svg",
+    "isActive": true,
+    "internalId": "3f2b1a10-a27c-50cc-8dca-f8b9f26759c3"
+  },
+  {
+    "id": "ML-44",
+    "name": "Bisacodyl 5 mg",
+    "category": "Digestive Care",
+    "description": "A stimulant laxative used for short-term relief of constipation.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-44.svg",
+    "isActive": true,
+    "internalId": "85b24714-de84-51a2-a8f0-01a7c3a06a1f"
+  },
+  {
+    "id": "ML-45",
+    "name": "Ferrous Sulfate",
+    "category": "Vitamins & Minerals",
+    "description": "An iron supplement used to prevent or treat iron deficiency when appropriate.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-45.svg",
+    "isActive": true,
+    "internalId": "f443ea5d-4fdb-59b2-b8db-c16f1852285f"
+  },
+  {
+    "id": "ML-46",
+    "name": "Folic Acid 5 mg",
+    "category": "Vitamins & Minerals",
+    "description": "A folate supplement used for prevention or treatment of folate deficiency in appropriate settings.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-46.svg",
+    "isActive": true,
+    "internalId": "f75296a9-1a95-5096-a9a0-fe4cdd290eeb"
+  },
+  {
+    "id": "ML-47",
+    "name": "Calcium + Vitamin D",
+    "category": "Vitamins & Minerals",
+    "description": "A calcium and vitamin D supplement used to support bone health when supplementation is appropriate.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-47.svg",
+    "isActive": true,
+    "internalId": "5ac0e0ba-73b5-5121-b613-f088f65537a7"
+  },
+  {
+    "id": "ML-48",
+    "name": "Vitamin D3",
+    "category": "Vitamins & Minerals",
+    "description": "A vitamin D supplement used to prevent or treat vitamin D deficiency.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-48.svg",
+    "isActive": true,
+    "internalId": "282934e4-6c22-5c4c-b142-9ce0e639c7b6"
+  },
+  {
+    "id": "ML-49",
+    "name": "Clotrimazole 1%",
+    "category": "Skin Care",
+    "description": "An antifungal medicine used for certain superficial fungal skin infections.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-49.svg",
+    "isActive": true,
+    "internalId": "d4347710-b704-5b4c-ad2b-160336e6d1e1"
+  },
+  {
+    "id": "ML-50",
+    "name": "Miconazole 2%",
+    "category": "Skin Care",
+    "description": "An antifungal medicine used for certain superficial fungal infections.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-50.svg",
+    "isActive": true,
+    "internalId": "f1ecce08-9109-5ca0-af95-4ebc14956638"
+  },
+  {
+    "id": "ML-51",
+    "name": "Hydrocortisone 1%",
+    "category": "Skin Care",
+    "description": "A topical corticosteroid used to reduce inflammation and itching in selected skin conditions.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-51.svg",
+    "isActive": true,
+    "internalId": "f05f8429-1d6c-5e75-bb32-299ad5118ebe"
+  },
+  {
+    "id": "ML-52",
+    "name": "Povidone-Iodine",
+    "category": "Antiseptic",
+    "description": "An antiseptic preparation used for skin cleansing and other appropriate topical applications.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-52.svg",
+    "isActive": true,
+    "internalId": "7f68753a-544a-5c92-b72f-4736571c2d38"
+  },
+  {
+    "id": "ML-53",
+    "name": "Chlorhexidine",
+    "category": "Antiseptic",
+    "description": "An antiseptic used for skin cleansing and infection-control applications.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-53.svg",
+    "isActive": true,
+    "internalId": "6bced67c-652e-5578-aaf4-52e5b20fa5c8"
+  },
+  {
+    "id": "ML-54",
+    "name": "Acetylcysteine 600 mg",
+    "category": "Respiratory",
+    "description": "A mucolytic medicine used in selected respiratory conditions and other clinical settings.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-54.svg",
+    "isActive": true,
+    "internalId": "60615931-11af-5150-9eb7-4d60d8b223a6"
+  },
+  {
+    "id": "ML-55",
+    "name": "Ambroxol 30 mg",
+    "category": "Respiratory",
+    "description": "A mucolytic medicine used to help loosen and clear respiratory mucus.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-55.svg",
+    "isActive": true,
+    "internalId": "7a84b166-1372-5948-9328-f0d0d41d15fe"
+  },
+  {
+    "id": "ML-56",
+    "name": "Dextromethorphan",
+    "category": "Cough & Cold",
+    "description": "A cough suppressant used for short-term relief of certain coughs.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-56.svg",
+    "isActive": true,
+    "internalId": "979b3e5f-62b8-515c-b0fe-535f737a6784"
+  },
+  {
+    "id": "ML-57",
+    "name": "Guaifenesin",
+    "category": "Cough & Cold",
+    "description": "An expectorant used to help loosen mucus in the airways.",
+    "externalSource": "MediLinkCatalog",
+    "imageUrl": "http://localhost:5201/medicine-images/ML-57.svg",
+    "isActive": true,
+    "internalId": "89cbcd23-15f8-5722-a3b7-a888e426f6dc"
+  }
+]

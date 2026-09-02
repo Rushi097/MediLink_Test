@@ -1,0 +1,34 @@
+[
+  {
+    "id": "f6285848-93d7-423d-af5d-dea52061dc24",
+    "storeId": "77bedf67-49dd-4bce-b713-0342a08addac",
+    "medicineId": "60615931-11af-5150-9eb7-4d60d8b223a6",
+    "externalMedicineId": "ML-54",
+    "price": 10,
+    "stockQuantity": 14
+  },
+  {
+    "id": "22b2d974-551e-4001-823c-744749d9e84e",
+    "storeId": "77bedf67-49dd-4bce-b713-0342a08addac",
+    "medicineId": "67a77f92-ead8-5eee-8f58-8c0f407efae4",
+    "externalMedicineId": "ML-2",
+    "price": 10,
+    "stockQuantity": 18
+  },
+  {
+    "id": "db0411db-af47-4b79-99b7-9a66681b1144",
+    "storeId": "77bedf67-49dd-4bce-b713-0342a08addac",
+    "medicineId": "2872fef0-b1e1-5b22-bc5d-064c98229246",
+    "externalMedicineId": "ML-21",
+    "price": 24,
+    "stockQuantity": 53
+  },
+  {
+    "id": "25ccee17-76e3-4d24-afdf-ebae121e10ec",
+    "storeId": "77bedf67-49dd-4bce-b713-0342a08addac",
+    "medicineId": "1af4ef24-53b7-5d28-aa9b-e8f811e9c382",
+    "externalMedicineId": "ML-5",
+    "price": 34,
+    "stockQuantity": 34
+  }
+]

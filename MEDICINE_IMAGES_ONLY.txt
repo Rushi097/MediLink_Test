@@ -1,0 +1,3 @@
+This update keeps the existing medicine catalogue unchanged.
+Only the local medicine images under src/MediLink.Inventory/wwwroot/medicine-images/ were refreshed with original MediLink Care packshot artwork.
+No medicines, names, descriptions, IDs, inventory data, or search behavior were added/removed.

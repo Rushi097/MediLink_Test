@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e7f1ef"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef2f5"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#203040" flood-opacity=".16"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="420" rx="24" fill="url(#bg)"/>
+  <circle cx="430" cy="82" r="55" fill="#4b8f83" opacity=".10" filter="url(#soft)"/>
+  <circle cx="88" cy="340" r="75" fill="#4b8f83" opacity=".08" filter="url(#soft)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="155" y="55" width="210" height="92" rx="10" fill="url(#box)" stroke="#d2dbe3"/>
+    <rect x="155" y="55" width="210" height="25" rx="8" fill="#4b8f83"/>
+    <text x="260" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#fff">MEDILINK CARE</text>
+    <text x="260" y="101" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#31475b">Povidone-Iodine</text>
+    <text x="260" y="124" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#738391">ANTISEPTIC</text>
+  </g>
+
+  
+        <g filter="url(#shadow)">
+          <rect x="52" y="135" width="120" height="82" rx="9" fill="#f4f6f8" stroke="#cbd4dc"/>
+          <rect x="58" y="141" width="108" height="12" rx="4" fill="#4b8f83"/>
+          <circle cx="75" cy="168" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="73.5" cy="166.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="95" cy="168" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="93.5" cy="166.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="115" cy="168" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="113.5" cy="166.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="135" cy="168" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="133.5" cy="166.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="155" cy="168" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="153.5" cy="166.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="75" cy="188" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="73.5" cy="186.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="95" cy="188" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="93.5" cy="186.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="115" cy="188" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="113.5" cy="186.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="135" cy="188" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="133.5" cy="186.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="155" cy="188" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="153.5" cy="186.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="75" cy="208" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="73.5" cy="206.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="95" cy="208" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="93.5" cy="206.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="115" cy="208" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="113.5" cy="206.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="135" cy="208" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="133.5" cy="206.5" r="2.2" fill="#ffffff" opacity=".75"/><circle cx="155" cy="208" r="6" fill="#d7dde2" stroke="#b7c0c8" stroke-width="1"/><circle cx="153.5" cy="206.5" r="2.2" fill="#ffffff" opacity=".75"/>
+        </g>
+        
+
+  <rect x="120" y="242" width="280" height="2" fill="#4b8f83" opacity=".25"/>
+  <text x="260" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#334a5e">Povidone-Iodine</text>
+  <text x="260" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#4b8f83">Antiseptic</text>
+  <text x="260" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#8a98a4">Illustrative MediLink catalogue packshot</text>
+  <text x="260" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#a0abb4">For identification in the MediLink demo catalogue</text>
+</svg>

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ec183dd9-9026-4a33-8af1-492321e1e410",
+    "name": "rushi12",
+    "address": "mankhurd",
+    "storeOwnerProfileId": "59de60dd-eea9-43d2-a0df-0a291e1c7501"
+  },
+  {
+    "id": "77bedf67-49dd-4bce-b713-0342a08addac",
+    "name": "rushikesh1",
+    "address": "mankhurd",
+    "storeOwnerProfileId": "b68e72ef-b4e1-4cd4-a29d-c8b4d4e8a307"
+  },
+  {
+    "id": "d3fa4552-3ff6-44e9-bc01-b1942a37e007",
+    "name": "meowstore",
+    "address": "bandra",
+    "storeOwnerProfileId": "465f7be6-c9ef-47d8-bd9f-53e316e5dedc"
+  }
+]
