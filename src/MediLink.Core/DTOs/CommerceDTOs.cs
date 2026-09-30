@@ -12,13 +12,38 @@ public class MedicineCreateRequest
     [Url] public string? ImageUrl { get; set; }
 }
 
+public class StoreInventoryCreateRequest
+{
+    [Required, StringLength(100)] public string ExternalMedicineId { get; set; } = string.Empty;
+    [Range(0.01, 100000)] public decimal Price { get; set; }
+    [Range(0, 100000)] public int StockQuantity { get; set; }
+}
+
+public class StoreInventoryUpdateRequest
+{
+    [Range(0.01, 100000)] public decimal Price { get; set; }
+    [Range(0, 100000)] public int StockQuantity { get; set; }
+}
+
 public class CartItemRequest
 {
     public Guid MedicineId { get; set; }
+    public Guid StoreId { get; set; }
+    // Optional compatibility field for medicine references created by older
+    // MediLink catalogue versions. The current UI sends MedicineId as well.
+    public string? ExternalMedicineId { get; set; }
     [Range(1, 50)] public int Quantity { get; set; } = 1;
 }
 
 public class CheckoutRequest
 {
     [Required, StringLength(300)] public string DeliveryAddress { get; set; } = string.Empty;
+    [Required, StringLength(30)] public string PaymentMethod { get; set; } = "CashOnDelivery";
+    public Guid StoreId { get; set; }
+}
+
+
+public class CartReconcileRequest
+{
+    public List<CartItemRequest> Items { get; set; } = new();
 }

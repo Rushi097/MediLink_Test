@@ -1,0 +1,37 @@
+[
+  {
+    "reservationId": "5fc2a021-d6fb-4248-8e31-4745d2185735",
+    "storeId": "ec183dd9-9026-4a33-8af1-492321e1e410",
+    "medicineId": "60615931-11af-5150-9eb7-4d60d8b223a6",
+    "quantity": 2,
+    "reservedAtUtc": "2026-08-11T07:27:07.1320257Z"
+  },
+  {
+    "reservationId": "defc422b-1aae-4469-abb6-58f4feee41b9",
+    "storeId": "77bedf67-49dd-4bce-b713-0342a08addac",
+    "medicineId": "60615931-11af-5150-9eb7-4d60d8b223a6",
+    "quantity": 1,
+    "reservedAtUtc": "2026-08-11T09:57:44.3164195Z"
+  },
+  {
+    "reservationId": "defc422b-1aae-4469-abb6-58f4feee41b9",
+    "storeId": "77bedf67-49dd-4bce-b713-0342a08addac",
+    "medicineId": "67a77f92-ead8-5eee-8f58-8c0f407efae4",
+    "quantity": 2,
+    "reservedAtUtc": "2026-08-11T09:57:44.3633034Z"
+  },
+  {
+    "reservationId": "e85298c5-e313-4976-902d-3beda62d6bd2",
+    "storeId": "ec183dd9-9026-4a33-8af1-492321e1e410",
+    "medicineId": "60615931-11af-5150-9eb7-4d60d8b223a6",
+    "quantity": 1,
+    "reservedAtUtc": "2026-08-29T18:31:17.1255187Z"
+  },
+  {
+    "reservationId": "e85298c5-e313-4976-902d-3beda62d6bd2",
+    "storeId": "ec183dd9-9026-4a33-8af1-492321e1e410",
+    "medicineId": "85b24714-de84-51a2-a8f0-01a7c3a06a1f",
+    "quantity": 1,
+    "reservedAtUtc": "2026-08-29T18:31:17.1689302Z"
+  }
+]

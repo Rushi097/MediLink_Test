@@ -7,9 +7,9 @@ namespace MediLink.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly MediLinkDbContext _db;
+    private readonly AuthDbContext _db;
 
-    public UserRepository(MediLinkDbContext db)
+    public UserRepository(AuthDbContext db)
     {
         _db = db;
     }
@@ -19,13 +19,15 @@ public class UserRepository : IUserRepository
         return await _db.Users
             .Include(u => u.CustomerProfile)
             .Include(u => u.StoreOwnerProfile)
-            .ThenInclude(s => s.Stores)
             .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
     }
 
     public async Task<User?> GetByIdAsync(Guid id)
     {
-        return await _db.Users.FindAsync(id);
+        return await _db.Users
+            .Include(u => u.CustomerProfile)
+            .Include(u => u.StoreOwnerProfile)
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<bool> UserExistsAsync(string email)
@@ -42,16 +44,23 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> CreateStoreOwnerAsync(User user, StoreOwnerProfile profile, Store store)
+    public async Task<int> CountByRoleAsync(MediLink.Core.Enums.UserRole role) => await _db.Users.CountAsync(u => u.Role == role);
+
+    public async Task<User> CreateStoreOwnerAsync(User user, StoreOwnerProfile profile)
     {
         _db.Users.Add(user);
         profile.UserId = user.Id;
+        user.StoreOwnerProfile = profile;
         _db.StoreOwnerProfiles.Add(profile);
-        
-        store.StoreOwnerProfileId = profile.Id;
-        _db.Stores.Add(store);
-
         await _db.SaveChangesAsync();
         return user;
+    }
+
+    public async Task DeleteUserAsync(Guid userId)
+    {
+        var user = await _db.Users.FindAsync(userId);
+        if (user is null) return;
+        _db.Users.Remove(user);
+        await _db.SaveChangesAsync();
     }
 }

@@ -1,151 +1,110 @@
-using System.Text;
-using MediLink.Core.Interfaces;
-using MediLink.Infrastructure.Data;
-using MediLink.Infrastructure.Repositories;
-using MediLink.Infrastructure.Services;
-using MediLink.Api.Middleware;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
+using System.Net;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Http.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// -----------------------------------------------------------------------------
-// 1. Database Context Setup (Entity Framework Core)
-// -----------------------------------------------------------------------------
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("DefaultConnection is not configured.");
-var mysqlVersion = Version.Parse(builder.Configuration["MySql:ServerVersion"] ?? "8.0.36");
-builder.Services.AddDbContext<MediLinkDbContext>(options =>
-    options.UseMySql(connectionString, new MySqlServerVersion(mysqlVersion)));
-
-// -----------------------------------------------------------------------------
-// 2. Dependency Injection: Repositories & Application Services
-// -----------------------------------------------------------------------------
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-
-// -----------------------------------------------------------------------------
-// 3. JWT Authentication & Authorization Configuration
-// -----------------------------------------------------------------------------
-var jwtSecret = builder.Configuration["JwtSettings:Secret"]
-    ?? throw new InvalidOperationException("JwtSettings:Secret must be configured with user secrets or environment variables.");
-if (jwtSecret.Length < 32)
-    throw new InvalidOperationException("JwtSettings:Secret must be at least 32 characters long.");
-var jwtIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "MediLinkApi";
-var jwtAudience = builder.Configuration["JwtSettings:Audience"] ?? "MediLinkClients";
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtIssuer,
-        ValidAudience = jwtAudience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-    };
-});
-
-builder.Services.AddAuthorization();
-builder.Services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("mysql");
-
-// -----------------------------------------------------------------------------
-// 4. CORS Policy Configuration
-// -----------------------------------------------------------------------------
+builder.WebHost.UseUrls("http://localhost:5140");
+builder.Services.AddHttpClient("gateway", client => { client.Timeout = TimeSpan.FromSeconds(30); });
+builder.Services.AddHealthChecks();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:3000") // Vite & CRA defaults
+        policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
     });
 });
 
-// -----------------------------------------------------------------------------
-// 5. Controllers & OpenAPI / Swagger Configuration
-// -----------------------------------------------------------------------------
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MediLink API", Version = "v1" });
-
-    // Enable Authorization header in Swagger UI
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        BearerFormat = "JWT"
-    });
-
-    c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
-    {
-        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
-    });
-});
-
-// -----------------------------------------------------------------------------
-// HTTP Request Pipeline Configuration
-// -----------------------------------------------------------------------------
 var app = builder.Build();
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MediLink API v1");
-        c.RoutePrefix = string.Empty;
-    });
-}
-
-app.UseHttpsRedirection();
-
-// Enable CORS
 app.UseCors("AllowReactApp");
 
-// Middleware ordering is critical: Authentication BEFORE Authorization
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-app.MapHealthChecks("/health");
-
-if (app.Environment.IsDevelopment())
+var routes = new (string Prefix, string Target)[]
 {
-    await using var scope = app.Services.CreateAsyncScope();
-    var db = scope.ServiceProvider.GetRequiredService<MediLinkDbContext>();
-    await db.Database.MigrateAsync();
-    await DatabaseSeeder.SeedAsync(db);
-    if (!await db.Users.AnyAsync(user => user.Role == MediLink.Core.Enums.UserRole.Admin))
+    ("/api/auth", builder.Configuration["Services:Auth"] ?? "http://localhost:5101"),
+    ("/api/medicines", builder.Configuration["Services:Inventory"] ?? "http://localhost:5201"),
+    ("/api/stores", builder.Configuration["Services:Inventory"] ?? "http://localhost:5201"),
+    ("/api/cart", builder.Configuration["Services:Order"] ?? "http://localhost:5301"),
+    ("/api/orders", builder.Configuration["Services:Order"] ?? "http://localhost:5301"),
+    ("/api/dashboard", builder.Configuration["Services:Order"] ?? "http://localhost:5301"),
+    ("/api/portal", builder.Configuration["Services:Order"] ?? "http://localhost:5301"),
+    ("/api/inventory", builder.Configuration["Services:Order"] ?? "http://localhost:5301"),
+    ("/api/store-orders", builder.Configuration["Services:Order"] ?? "http://localhost:5301")
+};
+
+app.MapGet("/health", async (IHttpClientFactory factory) =>
+{
+    var client = factory.CreateClient("gateway");
+    var checks = new Dictionary<string, string>();
+    var healthy = true;
+    foreach (var service in new[] {
+        ("auth", (builder.Configuration["Services:Auth"] ?? "http://localhost:5101") + "/ready"),
+        ("inventory", (builder.Configuration["Services:Inventory"] ?? "http://localhost:5201") + "/ready"),
+        ("order", (builder.Configuration["Services:Order"] ?? "http://localhost:5301") + "/ready")
+    })
     {
-        db.Users.Add(new MediLink.Core.Entities.User
+        try
         {
-            Email = "admin@medilink.local",
-            FirstName = "MediLink",
-            LastName = "Admin",
-            Role = MediLink.Core.Enums.UserRole.Admin,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123")
-        });
-        await db.SaveChangesAsync();
+            using var response = await client.GetAsync(service.Item2);
+            checks[service.Item1] = response.IsSuccessStatusCode ? "healthy" : $"unhealthy ({(int)response.StatusCode})";
+            healthy &= response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            checks[service.Item1] = $"unreachable: {ex.Message}";
+            healthy = false;
+        }
     }
-}
+    return Results.Json(new { status = healthy ? "healthy" : "degraded", services = checks }, statusCode: healthy ? 200 : 503);
+});
+
+app.MapGet("/", () => Results.Ok(new { service = "MediLink API Gateway", status = "running" }));
+app.MapGet("/swagger", () => Results.Redirect("http://localhost:5101/swagger"));
+app.MapGet("/swagger/index.html", () => Results.Redirect("http://localhost:5101/swagger"));
+
+app.MapMethods("/api/{**path}", new[] { "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" }, async (HttpContext context, IHttpClientFactory factory) =>
+{
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+
+    var path = context.Request.Path.Value ?? "/";
+    var route = routes.FirstOrDefault(r => path.StartsWith(r.Prefix, StringComparison.OrdinalIgnoreCase));
+    if (route == default)
+    {
+        context.Response.StatusCode = StatusCodes.Status404NotFound;
+        await context.Response.WriteAsJsonAsync(new { success = false, message = "No service route is configured for this endpoint." });
+        return;
+    }
+
+    var target = route.Target + path + context.Request.QueryString;
+    var client = factory.CreateClient("gateway");
+    using var request = new HttpRequestMessage(new HttpMethod(context.Request.Method), target);
+
+    if (context.Request.ContentLength > 0 || context.Request.Headers.ContainsKey("Transfer-Encoding"))
+        request.Content = new StreamContent(context.Request.Body);
+
+    foreach (var header in context.Request.Headers)
+    {
+        if (string.Equals(header.Key, "Host", StringComparison.OrdinalIgnoreCase)) continue;
+        if (!request.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray()))
+            request.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
+    }
+
+    using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted);
+    context.Response.StatusCode = (int)response.StatusCode;
+
+    foreach (var header in response.Headers)
+        context.Response.Headers[header.Key] = header.Value.ToArray();
+    foreach (var header in response.Content.Headers)
+        context.Response.Headers[header.Key] = header.Value.ToArray();
+    context.Response.Headers.Remove("transfer-encoding");
+
+    await response.Content.CopyToAsync(context.Response.Body, context.RequestAborted);
+});
 
 app.Run();

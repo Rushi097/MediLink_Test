@@ -5,6 +5,8 @@
 
 # dotenv files
 .env
+.env.*
+!.env.example
 
 # User-specific files
 *.rsuser
@@ -406,6 +408,12 @@ FodyWeavers.xsd
 *.sln.iml
 .idea/
 
+# Java and frontend build output
+**/target/
+**/dist/
+**/.vite/
+*.class
+
 ##
 ## Visual studio for Mac
 ##
@@ -480,3 +488,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Local processes and logs created by run.sh
+.medilink-run/
+/.metadata/

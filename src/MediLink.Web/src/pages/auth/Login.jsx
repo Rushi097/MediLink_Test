@@ -17,6 +17,7 @@ export default function Login() {
       const { data } = await axios.post(`${apiUrl}/auth/login`, form);
       localStorage.setItem("medilink-token", data.token);
       localStorage.setItem("medilink-user", JSON.stringify(data));
+      window.dispatchEvent(new Event("medilink-auth-changed"));
       nav(
         data.role === "Admin"
           ? "/admin"

@@ -19,23 +19,25 @@ public class JwtTokenService : IJwtTokenService
 
     public string GenerateToken(User user)
     {
-        var secretKey = _config["JwtSettings:Secret"] 
-            ?? "SuperSecretKeyForMediLinkApplication2026!KeyLengthMustBeLongerThan32Bytes";
+        var secretKey = _config["JwtSettings:Secret"]
+            ?? throw new InvalidOperationException("JwtSettings:Secret must be configured.");
         
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role.ToString()),
-            new Claim("FullName", $"{user.FirstName} {user.LastName}")
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email),
+            new(ClaimTypes.Role, user.Role.ToString()),
+            new("FullName", $"{user.FirstName} {user.LastName}")
         };
+        if (user.StoreOwnerProfile is not null)
+            claims.Add(new Claim("StoreOwnerProfileId", user.StoreOwnerProfile.Id.ToString()));
 
         var token = new JwtSecurityToken(
             issuer: _config["JwtSettings:Issuer"] ?? "MediLinkApi",
-            audience: _config["JwtSettings:Audience"] ?? "MediLinkReactClient",
+            audience: _config["JwtSettings:Audience"] ?? "MediLinkClients",
             claims: claims,
             expires: DateTime.UtcNow.AddHours(8),
             signingCredentials: creds

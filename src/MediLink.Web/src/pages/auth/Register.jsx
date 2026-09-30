@@ -26,10 +26,18 @@ export default function Register() {
       );
       localStorage.setItem("medilink-token", data.token);
       localStorage.setItem("medilink-user", JSON.stringify(data));
+      window.dispatchEvent(new Event("medilink-auth-changed"));
       nav("/");
-    } catch (e) {
+    } catch (requestError) {
+      const responseData = requestError.response?.data;
+      const validationErrors = responseData?.errors
+        ? Object.values(responseData.errors).flat().join(" ")
+        : null;
       setError(
-        e.response?.data?.message || "We could not create your account.",
+        responseData?.message ||
+          validationErrors ||
+          responseData?.title ||
+          "We could not create your account.",
       );
     } finally {
       setLoading(false);
@@ -63,7 +71,7 @@ export default function Register() {
           <input
             name="password"
             type="password"
-            minLength="6"
+            minLength="8"
             required
             onChange={change}
           />

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "b3d054b6-d02f-4cf8-9eb4-e27baec9ae6b",
+    "storeId": "ec183dd9-9026-4a33-8af1-492321e1e410",
+    "medicineId": "60615931-11af-5150-9eb7-4d60d8b223a6",
+    "externalMedicineId": "ML-54",
+    "price": 20,
+    "stockQuantity": 7
+  },
+  {
+    "id": "896f5761-c720-4f12-9178-1a8eab3cb005",
+    "storeId": "ec183dd9-9026-4a33-8af1-492321e1e410",
+    "medicineId": "85b24714-de84-51a2-a8f0-01a7c3a06a1f",
+    "externalMedicineId": "ML-44",
+    "price": 50,
+    "stockQuantity": 19
+  }
+]

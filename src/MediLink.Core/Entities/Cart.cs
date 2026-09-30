@@ -15,5 +15,9 @@ public class CartItem
     public Cart Cart { get; set; } = null!;
     public Guid MedicineId { get; set; }
     public Medicine Medicine { get; set; } = null!;
+    public Guid StoreId { get; set; }
+    public string MedicineName { get; set; } = string.Empty;
+    public decimal UnitPrice { get; set; }
+    public string? ImageUrl { get; set; }
     public int Quantity { get; set; }
 }

@@ -30,10 +30,17 @@ export default function StoreRegister() {
       );
       localStorage.setItem("medilink-token", data.token);
       localStorage.setItem("medilink-user", JSON.stringify(data));
+      window.dispatchEvent(new Event("medilink-auth-changed"));
       nav("/medical-store");
     } catch (requestError) {
+      const responseData = requestError.response?.data;
+      const validationErrors = responseData?.errors
+        ? Object.values(responseData.errors).flat().join(" ")
+        : null;
       setError(
-        requestError.response?.data?.message ||
+        responseData?.message ||
+          validationErrors ||
+          responseData?.title ||
           "We could not register your medical store.",
       );
     } finally {
