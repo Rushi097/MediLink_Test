@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders · MediLink Store</title><link rel="stylesheet" th:href="@{/css/store.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header}"></header>
+<main class="container">
+  <section class="page-heading"><div><span class="eyebrow">FULFILMENT</span><h1>Incoming orders</h1><p>Orders placed by customers who selected <strong th:text="${store.name}">your store</strong> appear here.</p></div></section>
+  <div class="notice success" th:if="${param.updated}" style="margin-bottom:18px;">Order status updated successfully.</div>
+  <div class="notice error" th:if="${param.error}" style="margin-bottom:18px;">The order status could not be updated. Please refresh the orders page and use the next available status.</div>
+  <div class="notice error" th:if="${ordersError != null}" th:text="${ordersError}" style="margin-bottom:18px;"></div>
+  <section class="panel" th:if="${pendingOrders > 0}" style="margin-bottom: 18px;">
+    <strong th:text="${pendingOrders + ' new order(s) waiting for acceptance'}">New orders waiting for acceptance</strong>
+    <span>Stock is reserved until your store accepts or rejects each order.</span>
+  </section>
+  <section class="panel">
+    <div class="empty" th:if="${#lists.isEmpty(orders)}">No customer orders have been placed for your store yet.</div>
+    <div class="order-list" th:unless="${#lists.isEmpty(orders)}">
+      <article class="order" th:each="order : ${orders}">
+        <div class="order-top"><div><strong th:text="${'Order #' + order.shortId}">Order</strong><span th:text="${#temporals.format(order.createdAt, 'dd MMM yyyy, HH:mm')}">Date</span></div><b th:text="${'₹' + order.totalAmount}">₹0</b></div>
+        <div class="order-grid">
+          <div><small>CUSTOMER</small><p th:text="${order.customerName}">Customer</p></div>
+          <div><small>PHONE</small><p th:text="${order.phone}">Phone</p></div>
+          <div class="delivery"><small>DELIVERY ADDRESS</small><p th:text="${order.deliveryAddress}">Address</p></div>
+        </div>
+        <div class="store-order-meta">
+          <div><small>MEDICAL STORE</small><strong th:text="${order.storeName}">Medical store</strong></div>
+          <div><small>STORE ADDRESS</small><span th:text="${order.storeAddress}">Store address</span></div>
+        </div>
+        <div class="order-items" th:if="${order.items != null}">
+          <div th:each="item : ${order.items}"><span th:text="${item.medicineName + ' × ' + item.quantity}">Medicine × 1</span><b th:text="${'₹' + item.lineTotal}">₹0</b></div>
+        </div>
+        <div class="order-actions" th:if="${order.status == 0}">
+          <form th:action="@{/orders/{id}/accept(id=${order.id})}" method="post"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"><button type="submit">Accept order</button></form>
+          <form th:action="@{/orders/{id}/reject(id=${order.id})}" method="post"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"><button type="submit" class="danger">Reject order</button></form>
+          <span>New · stock is reserved until you decide</span>
+        </div>
+        <div class="order-actions" th:if="${order.status == 1}">
+          <span class="claimed">Accepted by your store</span>
+          <form th:action="@{/orders/{id}/status(id=${order.id})}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <select name="status"><option value="2">Preparing</option></select>
+            <button type="submit" class="secondary">Start preparing</button>
+          </form>
+        </div>
+        <div class="order-actions" th:if="${order.status == 2}">
+          <span class="claimed">Preparing</span>
+          <form th:action="@{/orders/{id}/status(id=${order.id})}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <select name="status"><option value="5">Ready for delivery</option></select>
+            <button type="submit" class="secondary">Mark ready</button>
+          </form>
+        </div>
+        <div class="order-actions" th:if="${order.status == 5}">
+          <span class="claimed">Ready for delivery</span>
+          <form th:action="@{/orders/{id}/status(id=${order.id})}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <select name="status"><option value="6">Out for delivery</option></select>
+            <button type="submit" class="secondary">Dispatch order</button>
+          </form>
+        </div>
+        <div class="order-actions" th:if="${order.status == 6}">
+          <span class="claimed">Out for delivery</span>
+          <form th:action="@{/orders/{id}/status(id=${order.id})}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <select name="status"><option value="3">Delivered</option></select>
+            <button type="submit" class="secondary">Mark delivered</button>
+          </form>
+        </div>
+        <div class="order-actions" th:if="${order.status == 3}"><span class="claimed">Delivered</span></div>
+        <div class="order-actions" th:if="${order.status == 7}"><span class="danger-text">Rejected · reserved stock was restored</span></div>
+        <div class="order-actions" th:if="${order.status == 4}"><span>Cancelled</span></div>
+      </article>
+    </div>
+  </section>
+</main>
+</body></html>

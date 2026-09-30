@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f7e7ea"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef2f5"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#203040" flood-opacity=".16"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="420" rx="24" fill="url(#bg)"/>
+  <circle cx="430" cy="82" r="55" fill="#d94b5b" opacity=".10" filter="url(#soft)"/>
+  <circle cx="88" cy="340" r="75" fill="#d94b5b" opacity=".08" filter="url(#soft)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="155" y="55" width="210" height="92" rx="10" fill="url(#box)" stroke="#d2dbe3"/>
+    <rect x="155" y="55" width="210" height="25" rx="8" fill="#d94b5b"/>
+    <text x="260" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#fff">MEDILINK CARE</text>
+    <text x="260" y="101" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#31475b">Ibuprofen 200 mg</text>
+    <text x="260" y="124" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#738391">TABLETS</text>
+  </g>
+
+  
+        <g filter="url(#shadow)">
+          <rect x="70" y="137" width="82" height="82" rx="12" fill="#f4f6f8" stroke="#cbd4dc"/>
+          <rect x="76" y="144" width="70" height="19" rx="5" fill="#d94b5b"/>
+          <rect x="78" y="167" width="66" height="39" rx="5" fill="#ffffff" stroke="#d8dfe5"/>
+          <rect x="88" y="174" width="46" height="7" rx="3" fill="#d94b5b" opacity=".78"/>
+          <rect x="88" y="187" width="32" height="5" rx="2" fill="#b9c2ca"/>
+          <rect x="88" y="197" width="42" height="4" rx="2" fill="#d2d8dd"/>
+        </g>
+        
+
+  <rect x="120" y="242" width="280" height="2" fill="#d94b5b" opacity=".25"/>
+  <text x="260" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#334a5e">Ibuprofen 200 mg</text>
+  <text x="260" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d94b5b">Fever &amp; Pain</text>
+  <text x="260" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#8a98a4">Illustrative MediLink catalogue packshot</text>
+  <text x="260" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#a0abb4">For identification in the MediLink demo catalogue</text>
+</svg>
